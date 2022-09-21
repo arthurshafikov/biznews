@@ -10,3 +10,6 @@
 ###< symfony/phpunit-bridge ###
 .env
 .idea
+free-news-website-template
+var
+vendor
