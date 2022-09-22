@@ -7,7 +7,7 @@
 
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="{{ asset('img/favicon.ico')}}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -17,10 +17,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="{{ asset('css/style.css')}}" rel="stylesheet">
 
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
@@ -81,7 +81,7 @@
             </a>
         </div>
         <div class="col-lg-8 text-center text-lg-right">
-            <a href="https://htmlcodex.com"><img class="img-fluid" src="img/ads-728x90.png" alt=""></a>
+            <a href="https://htmlcodex.com"><img class="img-fluid" src="{{ asset('img/ads-728x90.png')}}" alt=""></a>
         </div>
     </div>
 </div>
@@ -197,22 +197,22 @@
             <h5 class="mb-4 text-white text-uppercase font-weight-bold">Flickr Photos</h5>
             <div class="row">
                 <div class="col-4 mb-3">
-                    <a href=""><img class="w-100" src="img/news-110x110-1.jpg" alt=""></a>
+                    <a href=""><img class="w-100" src="{{ asset('img/news-110x110-1.jpg') }}" alt=""></a>
                 </div>
                 <div class="col-4 mb-3">
-                    <a href=""><img class="w-100" src="img/news-110x110-2.jpg" alt=""></a>
+                    <a href=""><img class="w-100" src="{{  asset('img/news-110x110-2.jpg') }}" alt=""></a>
                 </div>
                 <div class="col-4 mb-3">
-                    <a href=""><img class="w-100" src="img/news-110x110-3.jpg" alt=""></a>
+                    <a href=""><img class="w-100" src="{{  asset('img/news-110x110-3.jpg') }}" alt=""></a>
                 </div>
                 <div class="col-4 mb-3">
-                    <a href=""><img class="w-100" src="img/news-110x110-4.jpg" alt=""></a>
+                    <a href=""><img class="w-100" src="{{  asset('img/news-110x110-4.jpg') }}" alt=""></a>
                 </div>
                 <div class="col-4 mb-3">
-                    <a href=""><img class="w-100" src="img/news-110x110-5.jpg" alt=""></a>
+                    <a href=""><img class="w-100" src="{{  asset('img/news-110x110-5.jpg') }}" alt=""></a>
                 </div>
                 <div class="col-4 mb-3">
-                    <a href=""><img class="w-100" src="img/news-110x110-1.jpg" alt=""></a>
+                    <a href=""><img class="w-100" src="{{  asset('img/news-110x110-1.jpg') }}" alt=""></a>
                 </div>
             </div>
         </div>
@@ -234,8 +234,8 @@
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="lib/easing/easing.min.js"></script>
-<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="{{ asset('lib/easing/easing.min.js')}}"></script>
+<script src="{{ asset('lib/owlcarousel/owl.carousel.min.js')}}"></script>
 
 
 {% block javascripts %}
