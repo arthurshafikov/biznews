@@ -33,6 +33,7 @@ class PostFixture extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $categories = $this->getCategories();
+
         for ($i = 0; $i < 50; $i++) {
             $post = new Post();
             $post->setCategory($this->faker->randomElement($categories));
@@ -43,6 +44,7 @@ class PostFixture extends Fixture implements DependentFixtureInterface
             $post->setViews($this->faker->randomNumber());
             $post->setCreatedAt(DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-1 year')));
             $manager->persist($post);
+            $this->setReference('post_' . $i, $post);
         }
          $manager->flush();
     }
