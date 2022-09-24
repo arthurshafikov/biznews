@@ -13,10 +13,12 @@ class HomeController extends AbstractController
     public function index(PostRepository $postRepository): Response
     {
         $sliderNews = $postRepository->getPostsByCategoryID(152); // togo get from admin settings
+        $nearToSliderNews = $postRepository->getPostsByCategoryID(149); // togo get from admin settings
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'sliderNews' => $sliderNews,
+            'nearToSliderNews' => $nearToSliderNews,
         ]);
     }
 }
