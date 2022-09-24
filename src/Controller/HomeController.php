@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Setting;
 use App\Repository\PostRepository;
+use App\Repository\SettingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,14 +12,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(PostRepository $postRepository): Response
+    public function index(PostRepository $postRepository, SettingRepository $settingRepository): Response
     {
-        $sliderNews = $postRepository->getPostsByCategoryID(152); // togo get from admin settings
-        $nearToSliderNews = $postRepository->getPostsByCategoryID(149); // togo get from admin settings
+        $sliderNews = $postRepository->getPostsByCategoryID(
+            $settingRepository->getSettingValue(Setting::SLIDER_POSTS_CATEGORY_ID)
+        );
+        $nearToSliderNews = $postRepository->getPostsByCategoryID(
+            $settingRepository->getSettingValue(Setting::NEAR_TO_SLIDER_POSTS_CATEGORY_ID)
+        );
         $breakingNews = $postRepository->getPostsWhereTagIsBreaking();
 
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
             'sliderNews' => $sliderNews,
             'nearToSliderNews' => $nearToSliderNews,
             'breakingNews' => $breakingNews,
