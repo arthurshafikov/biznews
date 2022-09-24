@@ -20,12 +20,16 @@ class HomeController extends AbstractController
         $nearToSliderNews = $postRepository->getPostsByCategoryID(
             $settingRepository->getSettingValue(Setting::NEAR_TO_SLIDER_POSTS_CATEGORY_ID)
         );
+        $featuredNews = $postRepository->getPostsByCategoryID(
+            $settingRepository->getSettingValue(Setting::FEATURED_NEWS_CATEGORY_ID), 8
+        );
         $breakingNews = $postRepository->getPostsWhereTagIsBreaking();
 
         return $this->render('home/index.html.twig', [
             'sliderNews' => $sliderNews,
             'nearToSliderNews' => $nearToSliderNews,
             'breakingNews' => $breakingNews,
+            'featuredNews' => $featuredNews,
         ]);
     }
 }

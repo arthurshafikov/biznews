@@ -12,6 +12,7 @@ class SettingFixture extends Fixture implements DependentFixtureInterface
     private const SETTINGS = [
         Setting::SLIDER_POSTS_CATEGORY_ID => 'category_1',
         Setting::NEAR_TO_SLIDER_POSTS_CATEGORY_ID => 'category_2',
+        Setting::FEATURED_NEWS_CATEGORY_ID => 'category_3',
     ];
 
     public function load(ObjectManager $manager): void
