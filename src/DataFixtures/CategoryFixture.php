@@ -23,7 +23,7 @@ class CategoryFixture extends Fixture
              $category->setSlug(strtolower($categoryName));
              $manager->persist($category);
 
-             $this->setReference('categories_' . $id, $category);
+             $this->setReference('category_' . $id, $category);
         }
 
         $manager->flush();

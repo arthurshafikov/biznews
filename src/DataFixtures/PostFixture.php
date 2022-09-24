@@ -61,7 +61,7 @@ class PostFixture extends Fixture implements DependentFixtureInterface
         $categories = [];
 
         for ($i = 0; $i < count(CategoryFixture::CATEGORIES); $i++) {
-            $categories[] = $this->getReference('categories_' . $i);
+            $categories[] = $this->getReference('category_' . $i);
         }
 
         return $categories;
