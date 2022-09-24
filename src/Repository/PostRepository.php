@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +40,15 @@ class PostRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Post[] Returns an array of Post objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Post
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getPostsByCategoryID(int $categoryID, int $limit = 4): array
+    {
+        return $this->createQueryBuilder('post')
+            ->andWhere('post.category = :id')
+            ->setParameter('id', $categoryID)
+            ->orderBy('post.created_at', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->setFetchMode(Post::class, 'category', ClassMetadataInfo::FETCH_EAGER)
+            ->getResult();
+    }
 }
