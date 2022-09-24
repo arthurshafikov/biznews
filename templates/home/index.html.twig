@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}BizNews{% endblock %}
 
 {% block body %}
     <!-- Main News Slider Start -->
@@ -18,7 +18,7 @@
                                            href="">{{ post.category.name }}</a>
                                         <a class="text-white" href="">{{ post.createdAt.format('M d, Y') }}</a>
                                     </div>
-                                    <a class="h2 m-0 text-white text-uppercase font-weight-bold" href="">
+                                    <a class="h2 m-0 text-white text-uppercase font-weight-bold" href="{{ path('app_post', {post: post.id}) }}">
                                         {{ post.content|slice(0, 50) ~ '...' }}
                                     </a>
                                 </div>
@@ -38,7 +38,7 @@
                                                href="">{{ post.category.name }}</a>
                                             <a class="text-white" href=""><small>{{ post.createdAt.format('M d, Y') }}</small></a>
                                         </div>
-                                        <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="">
+                                        <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="{{ path('app_post', {post: post.id}) }}">
                                             {{ post.content|slice(0, 31) ~ '...' }}
                                         </a>
                                     </div>
@@ -63,8 +63,8 @@
                              style="width: calc(100% - 170px); padding-right: 90px;">
                             {% for post in breakingNews %}
                                 <div class="text-truncate">
-                                    <a class="text-white text-uppercase font-weight-semi-bold" href="">
-                                        {{ post.title|slice(0,50) ~ "..." }}
+                                    <a class="text-white text-uppercase font-weight-semi-bold" href="{{ path('app_post', {post: post.id}) }}">
+                                        {{ post.title|slice(0,100) ~ "..." }}
                                     </a>
                                 </div>
                             {% endfor %}
