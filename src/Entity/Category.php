@@ -21,7 +21,7 @@ class Category
     #[ORM\Column(length: 60)]
     private ?string $slug = null;
 
-    #[ORM\OneToMany(mappedBy: 'category_id', targetEntity: Post::class)]
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Post::class)]
     private Collection $posts;
 
     public function __construct()
