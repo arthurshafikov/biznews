@@ -51,4 +51,16 @@ class PostRepository extends ServiceEntityRepository
             ->setFetchMode(Post::class, 'category', ClassMetadataInfo::FETCH_EAGER)
             ->getResult();
     }
+
+    public function getPostsWhereTagIsBreaking(int $limit = 3): array
+    {
+        return $this->createQueryBuilder('post')
+            ->innerJoin('post.tags', 'tags')
+            ->where('tags.name = :name')
+            ->setParameter('name', "Breaking") // todo remove hardcode
+            ->orderBy('post.created_at', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -14,11 +14,13 @@ class HomeController extends AbstractController
     {
         $sliderNews = $postRepository->getPostsByCategoryID(152); // togo get from admin settings
         $nearToSliderNews = $postRepository->getPostsByCategoryID(149); // togo get from admin settings
+        $breakingNews = $postRepository->getPostsWhereTagIsBreaking();
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'sliderNews' => $sliderNews,
             'nearToSliderNews' => $nearToSliderNews,
+            'breakingNews' => $breakingNews,
         ]);
     }
 }
