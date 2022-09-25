@@ -63,4 +63,14 @@ class PostRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getLatestPosts(int $limit = 4): array
+    {
+        return $this->createQueryBuilder('post')
+            ->orderBy('post.created_at', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->setFetchMode(Post::class, 'category', ClassMetadataInfo::FETCH_EAGER)
+            ->getResult();
+    }
 }

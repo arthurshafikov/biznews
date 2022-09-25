@@ -117,36 +117,44 @@
                                 <a class="text-secondary font-weight-medium text-decoration-none" href="">View All</a>
                             </div>
                         </div>
-                        {{ component('post-medium') }}
-                        {{ component('post-medium') }}
-                        <div class="col-lg-12 mb-3">
-                            <a href=""><img class="img-fluid w-100" src="img/ads-728x90.png" alt=""></a>
-                        </div>
 
-                        {{ component('post-medium') }}
-                        {{ component('post-medium') }}
-                        <div class="col-lg-6">
-                            {{ component('post-small') }}
-                            {{ component('post-small') }}
-                        </div>
-                        <div class="col-lg-6">
-                            {{ component('post-small') }}
-                            {{ component('post-small') }}
-                        </div>
-                        <div class="col-lg-12 mb-3">
-                            <a href=""><img class="img-fluid w-100" src="img/ads-728x90.png" alt=""></a>
-                        </div>
-                        <div class="col-lg-12">
-                            {{ component('post-big') }}
-                        </div>
-                        <div class="col-lg-6">
-                            {{ component('post-small') }}
-                            {{ component('post-small') }}
-                        </div>
-                        <div class="col-lg-6">
-                            {{ component('post-small') }}
-                            {{ component('post-small') }}
-                        </div>
+                        {% for post in latestNews %}
+                            {% if loop.index <= 2 %}
+                                {{ component('post-medium', {post: post}) }}
+                            {% endif %}
+
+                            {% if loop.index == 3 %}
+                                <div class="col-lg-12 mb-3">
+                                    <a href=""><img class="img-fluid w-100" src="img/ads-728x90.png" alt=""></a>
+                                </div>
+                            {% endif %}
+
+                            {% if loop.index >= 3 and loop.index <= 4 %}
+                                {{ component('post-medium', {post: post}) }}
+                            {% endif %}
+
+                            {% if loop.index == 5 or loop.index == 7 or loop.index == 9 or loop.index == 11%}
+                                <div class="col-lg-6">
+                            {% endif %}
+
+                            {% if (loop.index >= 5 and loop.index <= 8) or (loop.index >= 9 and loop.index <= 13) %}
+                                {{ component('post-small', {post: post}) }}
+                            {% endif %}
+
+                            {% if (loop.index == 6 or loop.index == 8) or (loop.index == 10 or loop.index == 12) %}
+                                </div>
+                            {% endif %}
+
+                            {% if loop.index == 8 %}
+                                <div class="col-lg-12 mb-3">
+                                    <a href=""><img class="img-fluid w-100" src="img/ads-728x90.png" alt=""></a>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    {{ component('post-big', {post: post}) }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
 
