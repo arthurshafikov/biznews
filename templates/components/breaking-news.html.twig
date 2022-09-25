@@ -5,12 +5,17 @@
             <div class="col-12">
                 <div class="d-flex justify-content-between">
                     <div class="section-title border-right-0 mb-0" style="width: 180px;">
-                        <h4 class="m-0 text-uppercase font-weight-bold">Tranding</h4>
+                        <h4 class="m-0 text-uppercase font-weight-bold">Trending</h4>
                     </div>
                     <div class="owl-carousel tranding-carousel position-relative d-inline-flex align-items-center bg-white border border-left-0"
                          style="width: calc(100% - 180px); padding-right: 100px;">
-                        <div class="text-truncate"><a class="text-secondary text-uppercase font-weight-semi-bold" href="">Lorem ipsum dolor sit amet elit. Proin interdum lacus eget ante tincidunt, sed faucibus nisl sodales</a></div>
-                        <div class="text-truncate"><a class="text-secondary text-uppercase font-weight-semi-bold" href="">Lorem ipsum dolor sit amet elit. Proin interdum lacus eget ante tincidunt, sed faucibus nisl sodales</a></div>
+                        {% for post in this.breakingNews %}
+                            <div class="text-truncate">
+                                <a class="text-secondary text-uppercase font-weight-semi-bold" href="{{ path('app_post', {post: post.id}) }}">
+                                    {{ post.title|slice(0,100) ~ "..." }}
+                                </a>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
