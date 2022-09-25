@@ -5,7 +5,7 @@ Parameters:
   * paginationPath (string) : the route name to use for links
   * lastPage (int) : represents the total number of existing pages
 #}
-{% set currentFilters = app.request.query.all %}
+{% set currentFilters = currentFilters|merge(app.request.query.all) %}
 {% set currentPage = app.request.get('page', 1) %}
 {% if lastPage > 1 %}
 

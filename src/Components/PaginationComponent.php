@@ -9,4 +9,5 @@ class PaginationComponent
 {
     public int $lastPage;
     public string $paginationPath;
+    public array $currentFilters = [];
 }
