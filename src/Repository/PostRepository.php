@@ -73,4 +73,14 @@ class PostRepository extends ServiceEntityRepository
             ->setFetchMode(Post::class, 'category', ClassMetadataInfo::FETCH_EAGER)
             ->getResult();
     }
+
+    public function getTrendingPosts(int $limit = 5): array
+    {
+        return $this->createQueryBuilder('post')
+            ->orderBy('post.views', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->setFetchMode(Post::class, 'category', ClassMetadataInfo::FETCH_EAGER)
+            ->getResult();
+    }
 }

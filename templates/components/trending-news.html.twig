@@ -4,11 +4,9 @@
         <h4 class="m-0 text-uppercase font-weight-bold">Trending News</h4>
     </div>
     <div class="bg-white border border-top-0 p-3">
-        {{ component('post-small') }}
-        {{ component('post-small') }}
-        {{ component('post-small') }}
-        {{ component('post-small') }}
-        {{ component('post-small') }}
+        {% for post in this.trendingNews %}
+            {{ component('post-small', {post: post}) }}
+        {% endfor %}
     </div>
 </div>
 <!-- Popular News End -->
