@@ -9,5 +9,4 @@ class PaginationComponent
 {
     public int $lastPage;
     public string $paginationPath;
-    public bool $showAlwaysFirstAndLast = true;
 }
