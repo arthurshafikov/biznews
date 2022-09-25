@@ -52,6 +52,23 @@ class PostRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
+     */
+    public function getPostsCount(?int $categoryID = null): int
+    {
+        $qb = $this->createQueryBuilder('post')
+            ->select('count(post.id)');
+
+        if ($categoryID !== null) {
+            $qb->andWhere('post.category = :id')
+                ->setParameter('id', $categoryID);
+        }
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function getPostsWhereTagIsBreaking(int $limit = 3): array
     {
         return $this->createQueryBuilder('post')

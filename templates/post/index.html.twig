@@ -11,6 +11,12 @@
                     {% for post in posts %}
                         {{ component('post-big', {post: post}) }}
                     {% endfor %}
+
+                    {{ component('pagination', {
+                            paginationPath: 'app_posts',
+                            lastPage: postsCount
+                       })
+                    }}
                 </div>
 
                 <div class="col-lg-4">

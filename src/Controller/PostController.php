@@ -14,9 +14,11 @@ class PostController extends AbstractController
     public function index(PostRepository $postRepository): Response
     {
         $posts = $postRepository->getLatestPosts(8);
+        $postsCount = $postRepository->getPostsCount();
 
         return $this->render('post/index.html.twig', [
             'posts' => $posts,
+            'postsCount' => $postsCount,
         ]);
     }
 
