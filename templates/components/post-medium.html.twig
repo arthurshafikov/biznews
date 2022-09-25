@@ -8,7 +8,7 @@
                 <a class="text-body" href=""><small>{{ post.createdAt }}</small></a>
             </div>
             <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href="{{ path('app_post', {post: post.id}) }}">
-                {{ post.title }}
+                {{ post.title|slice(0,31) ~ '...' }}
             </a>
 
             {% if showContent %}
