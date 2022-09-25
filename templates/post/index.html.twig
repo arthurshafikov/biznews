@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Latest News{% endblock %}
+
+{% block body %}
+    <div class="container-fluid mt-5 pt-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h1 class="text-uppercase text-black mb-4">Latest News:</h1>
+                    {% for post in posts %}
+                        {{ component('post-big', {post: post}) }}
+                    {% endfor %}
+                </div>
+
+                <div class="col-lg-4">
+                    {{ component('follow-us') }}
+
+                    {{ component('ads') }}
+
+                    {{ component('trending-news') }}
+
+                    {{ component('subscribe-newsletter') }}
+
+                    {{ component('tags-cloud') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
