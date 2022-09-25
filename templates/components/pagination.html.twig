@@ -6,7 +6,7 @@ Parameters:
   * lastPage (int) : represents the total number of existing pages
 #}
 {% set currentFilters = app.request.query.all %}
-{% set currentPage = app.request.get('page') %}
+{% set currentPage = app.request.get('page', 1) %}
 {% if lastPage > 1 %}
 
     {# the number of first and last pages to be displayed #}

@@ -8,13 +8,16 @@
             <div class="row">
                 <div class="col-lg-8">
                     <h1 class="text-uppercase text-black mb-4">Latest News:</h1>
-                    {% for post in posts %}
-                        {{ component('post-big', {post: post}) }}
-                    {% endfor %}
-
+                    {% if posts %}
+                        {% for post in posts %}
+                            {{ component('post-big', {post: post}) }}
+                        {% endfor %}
+                    {% else %}
+                        <h3>No posts found!</h3>
+                    {% endif %}
                     {{ component('pagination', {
                             paginationPath: 'app_posts',
-                            lastPage: postsCount
+                            lastPage: pagesCount
                        })
                     }}
                 </div>

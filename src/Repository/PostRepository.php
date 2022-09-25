@@ -52,10 +52,6 @@ class PostRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\NoResultException
-     */
     public function getPostsCount(?int $categoryID = null): int
     {
         $qb = $this->createQueryBuilder('post')
@@ -81,11 +77,12 @@ class PostRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getLatestPosts(int $limit = 4): array
+    public function getLatestPosts(int $limit = 4, int $page = 1): array
     {
         return $this->createQueryBuilder('post')
             ->orderBy('post.created_at', 'DESC')
             ->setMaxResults($limit)
+            ->setFirstResult($limit * ($page-1))
             ->getQuery()
             ->setFetchMode(Post::class, 'category', ClassMetadataInfo::FETCH_EAGER)
             ->getResult();
