@@ -133,19 +133,19 @@
                                 {{ component('post-medium', {post: post}) }}
                             {% endif %}
 
-                            {% if loop.index == 5 or loop.index == 7 or loop.index == 9 or loop.index == 11%}
+                            {% if loop.index == 5 or loop.index == 7 or loop.index == 10 or loop.index == 12%}
                                 <div class="col-lg-6">
                             {% endif %}
 
-                            {% if (loop.index >= 5 and loop.index <= 8) or (loop.index >= 9 and loop.index <= 13) %}
+                            {% if (loop.index >= 5 and loop.index <= 8) or (loop.index >= 10 and loop.index <= 13) %}
                                 {{ component('post-small', {post: post}) }}
                             {% endif %}
 
-                            {% if (loop.index == 6 or loop.index == 8) or (loop.index == 10 or loop.index == 12) %}
+                            {% if (loop.index == 6 or loop.index == 8) or (loop.index == 11 or loop.index == 13) %}
                                 </div>
                             {% endif %}
 
-                            {% if loop.index == 8 %}
+                            {% if loop.index == 9 %}
                                 <div class="col-lg-12 mb-3">
                                     <a href=""><img class="img-fluid w-100" src="img/ads-728x90.png" alt=""></a>
                                 </div>
