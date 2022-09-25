@@ -4,7 +4,7 @@
         <div class="bg-white border border-top-0 p-4">
             <div class="mb-2">
                 <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                   href="">{{ post.category.name }}</a>
+                   href="{{ path('app_category', {slug: post.category.slug}) }}">{{ post.category.name }}</a>
                 <a class="text-body" href=""><small>{{ post.createdAt }}</small></a>
             </div>
             <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href="{{ path('app_post', {post: post.id}) }}">

@@ -15,7 +15,7 @@
                                 <div class="overlay">
                                     <div class="mb-2">
                                         <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                                           href="">{{ post.category.name }}</a>
+                                           href="{{ path('app_category', {slug: post.category.slug}) }}">{{ post.category.name }}</a>
                                         <a class="text-white" href="">{{ post.createdAt }}</a>
                                     </div>
                                     <a class="h2 m-0 text-white text-uppercase font-weight-bold" href="{{ path('app_post', {post: post.id}) }}">
@@ -35,7 +35,7 @@
                                     <div class="overlay">
                                         <div class="mb-2">
                                             <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                                               href="">{{ post.category.name }}</a>
+                                               href="{{ path('app_category', {slug: post.category.slug}) }}">{{ post.category.name }}</a>
                                             <a class="text-white" href=""><small>{{ post.createdAt }}</small></a>
                                         </div>
                                         <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="{{ path('app_post', {post: post.id}) }}">
@@ -90,7 +90,7 @@
                         <div class="overlay">
                             <div class="mb-2">
                                 <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                                   href="">{{ post.category.name }}</a>
+                                   href="{{ path('app_category', {slug: post.category.slug}) }}">{{ post.category.name }}</a>
                                 <a class="text-white" href=""><small>{{ post.createdAt }}</small></a>
                             </div>
                             <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="{{ path('app_post', {post: post.id}) }}">

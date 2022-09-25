@@ -1,53 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CategoryController!{% endblock %}
+{% block title %}{{ category.name }} News{% endblock %}
 
 {% block body %}
-    <!-- News With Sidebar Start -->
     <div class="container-fluid mt-5 pt-3">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="section-title">
-                                <h4 class="m-0 text-uppercase font-weight-bold">Category: Business</h4>
-                                <a class="text-secondary font-weight-medium text-decoration-none" href="">View All</a>
-                            </div>
-                        </div>
-
-                        {{ component('post-medium', {showContent: true}) }}
-                        {{ component('post-medium', {showContent: true}) }}
-
-                        <div class="col-lg-12 mb-3">
-                            <a href=""><img class="img-fluid w-100" src="{{ asset('img/ads-728x90.png') }} " alt=""></a>
-                        </div>
-
-                        {{ component('post-medium', {showContent: true}) }}
-                        {{ component('post-medium', {showContent: true}) }}
-                        <div class="col-lg-6">
-                            {{ component('post-small') }}
-                            {{ component('post-small') }}
-                        </div>
-                        <div class="col-lg-6">
-                            {{ component('post-small') }}
-                            {{ component('post-small') }}
-                        </div>
-                        <div class="col-lg-12 mb-3">
-                            <a href=""><img class="img-fluid w-100" src="{{ asset('img/ads-728x90.png') }}" alt=""></a>
-                        </div>
-                        <div class="col-lg-12">
-                            {{ component('post-big') }}
-                        </div>
-                        <div class="col-lg-6">
-                            {{ component('post-small') }}
-                            {{ component('post-small') }}
-                        </div>
-                        <div class="col-lg-6">
-                            {{ component('post-small') }}
-                            {{ component('post-small') }}
-                        </div>
-                    </div>
+                    <h1 class="text-uppercase text-black mb-4">{{ category.name }} news:</h1>
+                    {% if posts %}
+                        {% for post in posts %}
+                            {{ component('post-big', {post: post}) }}
+                        {% endfor %}
+                    {% else %}
+                        <h3>No posts found!</h3>
+                    {% endif %}
+                    {{ component('pagination', {
+                            paginationPath: 'app_category',
+                            lastPage: pagesCount,
+                            currentFilters: {
+                                slug: category.slug
+                            }
+                        })
+                    }}
                 </div>
 
                 <div class="col-lg-4">
@@ -64,5 +39,4 @@
             </div>
         </div>
     </div>
-    <!-- News With Sidebar End -->
 {% endblock %}

@@ -40,13 +40,14 @@ class PostRepository extends ServiceEntityRepository
         }
     }
 
-    public function getPostsByCategoryID(int $categoryID, int $limit = 4): array
+    public function getPostsByCategoryID(int $categoryID, int $limit = 4, int $page = 1): array
     {
         return $this->createQueryBuilder('post')
             ->andWhere('post.category = :id')
             ->setParameter('id', $categoryID)
             ->orderBy('post.created_at', 'DESC')
             ->setMaxResults($limit)
+            ->setFirstResult($limit * ($page-1))
             ->getQuery()
             ->setFetchMode(Post::class, 'category', ClassMetadataInfo::FETCH_EAGER)
             ->getResult();
