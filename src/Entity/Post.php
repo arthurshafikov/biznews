@@ -77,7 +77,7 @@ class Post
 
     public function getImage(): ?string
     {
-        return 'img/' . $this->image;
+        return '/img/' . $this->image;
     }
 
     public function setImage(string $image): self
