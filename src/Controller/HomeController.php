@@ -5,11 +5,10 @@ namespace App\Controller;
 use App\Entity\Setting;
 use App\Repository\PostRepository;
 use App\Repository\SettingRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController extends AbstractController
+class HomeController extends Controller
 {
     private const NUMBER_OF_LATEST_POSTS = 13;
 

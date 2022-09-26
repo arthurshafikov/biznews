@@ -12,6 +12,7 @@ class Setting
     public const NEAR_TO_SLIDER_POSTS_CATEGORY_ID = 'near_to_slider_posts_category_id';
     public const FEATURED_TAG_ID = 'featured_tag_id';
     public const BREAKING_TAG_ID = 'breaking_tag_id';
+    public const POSTS_PER_PAGE = 'posts_per_page';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

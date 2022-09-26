@@ -14,14 +14,19 @@ class SettingFixture extends Fixture implements DependentFixtureInterface
         Setting::NEAR_TO_SLIDER_POSTS_CATEGORY_ID => 'category_2',
         Setting::FEATURED_TAG_ID => 'tag_1',
         Setting::BREAKING_TAG_ID => 'tag_0',
+        Setting::POSTS_PER_PAGE => 8,
     ];
 
     public function load(ObjectManager $manager): void
     {
-        foreach (static::SETTINGS as $settingName => $reference) {
+        foreach (static::SETTINGS as $settingName => $value) {
             $setting = new Setting();
-            $setting->setName($settingName)
-                ->setValue($this->getReference($reference)->getId());
+
+            $value = strpos($value, '_')
+                ? $this->getReference($value)->getId()
+                : $value;
+
+            $setting->setName($settingName)->setValue($value);
             $manager->persist($setting);
         }
 
