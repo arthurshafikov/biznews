@@ -10,7 +10,7 @@ class Setting
 {
     public const SLIDER_POSTS_CATEGORY_ID = 'slider_posts_category_id';
     public const NEAR_TO_SLIDER_POSTS_CATEGORY_ID = 'near_to_slider_posts_category_id';
-    public const FEATURED_NEWS_CATEGORY_ID = 'featured_news_category_id';
+    public const FEATURED_TAG_ID = 'featured_tag_id';
     public const BREAKING_TAG_ID = 'breaking_tag_id';
 
     #[ORM\Id]

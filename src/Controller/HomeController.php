@@ -25,8 +25,8 @@ class HomeController extends AbstractController
         $breakingNews = $postRepository->getPostsByTagID(
             $settingRepository->getSettingValue(Setting::BREAKING_TAG_ID), 3
         );
-        $featuredNews = $postRepository->getPostsByCategoryID(
-            $settingRepository->getSettingValue(Setting::FEATURED_NEWS_CATEGORY_ID), 8
+        $featuredNews = $postRepository->getPostsByTagID(
+            $settingRepository->getSettingValue(Setting::FEATURED_TAG_ID), 8
         );
         $latestNews = $postRepository->getLatestPosts(static::NUMBER_OF_LATEST_POSTS);
 
