@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ tag.name }} News{% endblock %}
+
+{% block body %}
+    <div class="container-fluid mt-5 pt-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h1 class="text-uppercase text-black mb-4">{{ tag.name }} news:</h1>
+                    {% if posts %}
+                        {% for post in posts %}
+                            {{ component('post-big', {post: post}) }}
+                        {% endfor %}
+                    {% else %}
+                        <h3>No posts found!</h3>
+                    {% endif %}
+                    {{ component('pagination', {
+                        paginationPath: 'app_tag',
+                        lastPage: pagesCount,
+                        currentFilters: {
+                            slug: tag.slug
+                        }
+                    })
+                    }}
+                </div>
+
+                <div class="col-lg-4">
+                    {{ component('follow-us') }}
+
+                    {{ component('ads') }}
+
+                    {{ component('trending-news') }}
+
+                    {{ component('subscribe-newsletter') }}
+
+                    {{ component('tags-cloud') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

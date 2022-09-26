@@ -98,4 +98,18 @@ class PostRepository extends ServiceEntityRepository
             ->setFetchMode(Post::class, 'category', ClassMetadataInfo::FETCH_EAGER)
             ->getResult();
     }
+
+    public function getPostsByTagID(int $tagID, int $limit = 4, int $page = 1): array
+    {
+        return $this->createQueryBuilder('post')
+            ->innerJoin('post.tags', 'tags')
+            ->where('tags.id = :id')
+            ->setParameter('id', $tagID)
+            ->orderBy('post.created_at', 'DESC')
+            ->setMaxResults($limit)
+            ->setFirstResult($limit * ($page-1))
+            ->getQuery()
+            ->setFetchMode(Post::class, 'category', ClassMetadataInfo::FETCH_EAGER)
+            ->getResult();
+    }
 }
