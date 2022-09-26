@@ -13,6 +13,7 @@ class SettingFixture extends Fixture implements DependentFixtureInterface
         Setting::SLIDER_POSTS_CATEGORY_ID => 'category_1',
         Setting::NEAR_TO_SLIDER_POSTS_CATEGORY_ID => 'category_2',
         Setting::FEATURED_NEWS_CATEGORY_ID => 'category_3',
+        Setting::BREAKING_TAG_ID => 'tag_0',
     ];
 
     public function load(ObjectManager $manager): void
@@ -30,7 +31,7 @@ class SettingFixture extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            PostFixture::class,
+            TagFixture::class,
         ];
     }
 }

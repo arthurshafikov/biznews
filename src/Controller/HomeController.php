@@ -22,7 +22,9 @@ class HomeController extends AbstractController
         $nearToSliderNews = $postRepository->getPostsByCategoryID(
             $settingRepository->getSettingValue(Setting::NEAR_TO_SLIDER_POSTS_CATEGORY_ID)
         );
-        $breakingNews = $postRepository->getPostsWhereTagIsBreaking();
+        $breakingNews = $postRepository->getPostsByTagID(
+            $settingRepository->getSettingValue(Setting::BREAKING_TAG_ID), 3
+        );
         $featuredNews = $postRepository->getPostsByCategoryID(
             $settingRepository->getSettingValue(Setting::FEATURED_NEWS_CATEGORY_ID), 8
         );

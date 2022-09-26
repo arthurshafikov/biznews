@@ -29,7 +29,7 @@ class TagFixture extends Fixture implements DependentFixtureInterface
 
             $manager->persist($tag);
 
-            $this->setReference('tags_' . $id, $tag);
+            $this->setReference('tag_' . $id, $tag);
         }
 
         $manager->flush();
