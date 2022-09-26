@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -42,15 +43,10 @@ class PostRepository extends ServiceEntityRepository
 
     public function getPostsByCategoryID(int $categoryID, int $limit = 4, int $page = 1): array
     {
-        return $this->createQueryBuilder('post')
-            ->andWhere('post.category = :id')
-            ->setParameter('id', $categoryID)
-            ->orderBy('post.created_at', 'DESC')
-            ->setMaxResults($limit)
-            ->setFirstResult($limit * ($page-1))
-            ->getQuery()
-            ->setFetchMode(Post::class, 'category', ClassMetadataInfo::FETCH_EAGER)
-            ->getResult();
+        return $this->getLatestPostsQueryWrapper(function (QueryBuilder $queryBuilder) use ($categoryID) {
+            $queryBuilder->andWhere('post.category = :id')
+                ->setParameter('id', $categoryID);
+        }, $limit, $page);
     }
 
     public function getPostsCount(?int $categoryID = null): int
@@ -68,35 +64,35 @@ class PostRepository extends ServiceEntityRepository
 
     public function getLatestPosts(int $limit = 4, int $page = 1): array
     {
-        return $this->createQueryBuilder('post')
-            ->orderBy('post.created_at', 'DESC')
-            ->setMaxResults($limit)
-            ->setFirstResult($limit * ($page-1))
-            ->getQuery()
-            ->setFetchMode(Post::class, 'category', ClassMetadataInfo::FETCH_EAGER)
-            ->getResult();
+        return $this->getLatestPostsQueryWrapper(fn () => null, $limit, $page);
     }
 
     public function getTrendingPosts(int $limit = 5): array
     {
-        return $this->createQueryBuilder('post')
-            ->orderBy('post.views', 'DESC')
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->setFetchMode(Post::class, 'category', ClassMetadataInfo::FETCH_EAGER)
-            ->getResult();
+        return $this->getLatestPostsQueryWrapper(function (QueryBuilder $queryBuilder) {
+            $queryBuilder->orderBy('post.views', 'DESC');
+        }, $limit, 1);
     }
 
     public function getPostsByTagID(int $tagID, int $limit = 4, int $page = 1): array
     {
-        return $this->createQueryBuilder('post')
-            ->innerJoin('post.tags', 'tags')
-            ->where('tags.id = :id')
-            ->setParameter('id', $tagID)
+        return $this->getLatestPostsQueryWrapper(function (QueryBuilder $queryBuilder) use ($tagID) {
+            $queryBuilder->innerJoin('post.tags', 'tags')
+                ->where('tags.id = :id')
+                ->setParameter('id', $tagID);
+        }, $limit, $page);
+    }
+
+    private function getLatestPostsQueryWrapper(callable $callback, int $limit, int $page): array
+    {
+        $queryBuilder = $this->createQueryBuilder('post')
             ->orderBy('post.created_at', 'DESC')
             ->setMaxResults($limit)
-            ->setFirstResult($limit * ($page-1))
-            ->getQuery()
+            ->setFirstResult($limit * ($page-1));
+
+        $callback($queryBuilder);
+
+        return $queryBuilder->getQuery()
             ->setFetchMode(Post::class, 'category', ClassMetadataInfo::FETCH_EAGER)
             ->getResult();
     }
