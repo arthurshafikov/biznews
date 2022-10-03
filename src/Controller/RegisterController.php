@@ -43,6 +43,10 @@ class RegisterController extends Controller
         $entityManager->persist($user);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_home');
+        $request->getSession()->getFlashBag()->add('session-message',  [
+            'message' => 'You have registered successfully',
+        ]);
+
+        return $this->redirectToRoute('app_login');
     }
 }

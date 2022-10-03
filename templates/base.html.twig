@@ -101,10 +101,10 @@
 {% for sessionMessage in app.flashes('session-message') %}
     <div class="container-fluid">
         <div class="alert alert-success" role="alert">
-            {% if sessionMessage['title'] %}
-                <h4 class="alert-heading">{{ sessionMessage['title'] }}</h4>
+            {% if sessionMessage.title is defined %}
+                <h4 class="alert-heading">{{ sessionMessage.title }}</h4>
             {% endif %}
-            <p>{{ sessionMessage['message'] }}</p>
+            <p>{{ sessionMessage.message }}</p>
         </div>
     </div>
 {% endfor %}
