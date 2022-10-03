@@ -8,7 +8,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent('tags-cloud')]
 class TagsCloudComponent
 {
-    public function __construct(public readonly TagRepository $tagRepository)
+    public function __construct(private readonly TagRepository $tagRepository)
     {
     }
 
