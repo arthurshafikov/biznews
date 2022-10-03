@@ -25,4 +25,9 @@ class LoginController extends Controller
             'form' => $loginForm->createView(),
         ]);
     }
+
+    #[Route(path: '/logout', name: 'app_logout')]
+    public function logout(): void
+    {
+    }
 }
