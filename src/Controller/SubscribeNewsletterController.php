@@ -15,8 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SubscribeNewsletterController extends AbstractController
 {
-    private const CREATED_AT_FORMAT_FOR_TOKEN = 'Y-m-d H-s-m';
-
     #[Route('/subscribe/newsletter', name: 'app_newsletter_subscribe')]
     public function subscribe(Request $request, SubscribedEmailRepository $repository): Response
     {
@@ -38,8 +36,34 @@ class SubscribeNewsletterController extends AbstractController
         return new RedirectResponse($this->generateUrl('app_home'));
     }
 
+    #[Route('/subscribe/confirm', name: 'app_newsletter_confirm')]
+    public function confirmSubscription(Request $request, SubscribedEmailRepository $repository): Response
+    {
+        $subscribedEmail = $repository->findOneBy([
+            'email' => $request->get('email'),
+        ]);
+
+        if ($subscribedEmail !== null && $subscribedEmail->getToken() === $request->get('token')) {
+            $subscribedEmail->setVerified(true);
+            $repository->add($subscribedEmail, true);
+
+            $request->getSession()->getFlashBag()->add('session-message', [
+                'title' => 'Success!',
+                'message' => 'You have successfully verified your subscription!',
+            ]);
+        } else {
+            $request->getSession()->getFlashBag()->add('session-message', [
+                'title' => 'Error!',
+                'message' => 'Wrong token!',
+                'type' => 'error',
+            ]);
+        }
+
+        return new RedirectResponse($this->generateUrl('app_home'));
+    }
+
     private function generateToken(string $email, DateTimeInterface $timestamp): string
     {
-        return sha1($email . $timestamp->format(static::CREATED_AT_FORMAT_FOR_TOKEN));
+        return sha1($email . $timestamp->format('Y-m-d H-s-m'));
     }
 }
