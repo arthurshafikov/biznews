@@ -100,7 +100,7 @@
 <!-- Flash Message -->
 {% for sessionMessage in app.flashes('session-message') %}
     <div class="container-fluid">
-        <div class="alert {% if sessionMessage.type == 'error' %}alert-danger{% else %}alert-success{% endif %}" role="alert">
+        <div class="alert {% if sessionMessage.type|default == 'error' %}alert-danger{% else %}alert-success{% endif %}" role="alert">
             {% if sessionMessage.title is defined %}
                 <h4 class="alert-heading">{{ sessionMessage.title }}</h4>
             {% endif %}
