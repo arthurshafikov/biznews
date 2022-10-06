@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\SubscribedEmail;
+use App\Events\SubscribedEmailCreated;
 use App\Repository\SubscribedEmailRepository;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +17,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SubscribeNewsletterController extends AbstractController
 {
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
+    {
+    }
+
     #[Route('/subscribe/newsletter', name: 'app_newsletter_subscribe')]
     public function subscribe(Request $request, SubscribedEmailRepository $repository): Response
     {
@@ -26,6 +32,8 @@ class SubscribeNewsletterController extends AbstractController
         $subscribeEmail->setVerified(false);
         $subscribeEmail->setCreatedAt($now);
         $repository->add($subscribeEmail, true);
+
+        $this->eventDispatcher->dispatch(new SubscribedEmailCreated($subscribeEmail), SubscribedEmailCreated::NAME);
 
         $request->getSession()->getFlashBag()->add('session-message',  [
             'title' => 'Congratulations!',
