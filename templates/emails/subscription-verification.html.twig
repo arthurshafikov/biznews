@@ -1,0 +1,44 @@
+{% extends 'emails/base.html.twig' %}
+
+{% block content %}
+{% set url = url('app_newsletter_confirm', {
+    email: email,
+    token: token
+}) %}
+<!-- START CENTERED WHITE CONTAINER -->
+<table role="presentation" class="main">
+    <!-- START MAIN CONTENT AREA -->
+    <tr>
+        <td class="wrapper">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        <p>Hi there,</p>
+                        <p>Please verify your subscription by clicking on this button</p>
+                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+                            <tbody>
+                            <tr>
+                                <td align="left">
+                                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                                        <tbody>
+                                        <tr>
+                                            <td> <a href="{{ url }}" target="_blank">Click</a> </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p>If the button doesn't work, simply click on this link</p>
+                        <a href="{{ url }}">{{ url }}</a>
+                        <small>If you did not request this, just ignore this letter</small>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <!-- END MAIN CONTENT AREA -->
+</table>
+<!-- END CENTERED WHITE CONTAINER -->
+{% endblock %}
