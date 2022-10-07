@@ -13,7 +13,9 @@ class CategoryController extends Controller
     #[Route('/category/{slug}', name: 'app_category')]
     public function index(Category $category, PostRepository $postRepository, Request $request): Response
     {
-        $postsCount = $postRepository->getPostsCount($category->getId());
+        $postsCount = $postRepository->getPostsCount([
+            'category_id' => $category->getId(),
+        ]);
         $categoryPosts = $postRepository
             ->getPostsByCategoryID($category->getId(), $this->getPostsPerPageSetting(), $request->get('page', 1));
 

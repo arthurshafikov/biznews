@@ -44,22 +44,21 @@ class PostRepository extends ServiceEntityRepository
     public function getPostsByCategoryID(int $categoryID, int $limit = 4, int $page = 1): array
     {
         return $this->getLatestPostsQueryWrapper(function (QueryBuilder $queryBuilder) use ($categoryID) {
-            $queryBuilder->andWhere('post.category = :id')
-                ->setParameter('id', $categoryID);
+            $this->setCategoryInQueryBuilder($queryBuilder, $categoryID);
         }, $limit, $page);
     }
 
-    public function getPostsCount(?int $categoryID = null): int
+    public function getPostsCount(array $params = []): int
     {
-        $qb = $this->createQueryBuilder('post')
-            ->select('count(post.id)');
+        $result = $this->getLatestPostsQueryWrapper(function (QueryBuilder $queryBuilder) use ($params) {
+            $queryBuilder->select('count(post.id)')->setMaxResults(null);
 
-        if ($categoryID !== null) {
-            $qb->andWhere('post.category = :id')
-                ->setParameter('id', $categoryID);
-        }
+            if (array_key_exists('category_id', $params)) {
+                $this->setCategoryInQueryBuilder($queryBuilder, $params['category_id']);
+            }
+        }, 0, 1);
 
-        return (int) $qb->getQuery()->getSingleScalarResult();
+        return $result[0][1] ?? 0;
     }
 
     public function getLatestPosts(int $limit = 4, int $page = 1): array
@@ -95,5 +94,11 @@ class PostRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()
             ->setFetchMode(Post::class, 'category', ClassMetadataInfo::FETCH_EAGER)
             ->getResult();
+    }
+
+    private function setCategoryInQueryBuilder(QueryBuilder $queryBuilder, int $categoryID)
+    {
+        $queryBuilder->andWhere('post.category = :id')
+            ->setParameter('id', $categoryID);
     }
 }
