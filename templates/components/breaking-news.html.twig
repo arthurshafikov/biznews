@@ -11,7 +11,7 @@
                          style="width: calc(100% - 180px); padding-right: 100px;">
                         {% for post in this.breakingNews %}
                             <div class="text-truncate">
-                                <a class="text-secondary text-uppercase font-weight-semi-bold" href="{{ path('app_post', {post: post.id}) }}">
+                                <a class="text-secondary text-uppercase font-weight-semi-bold" href="{{ path('app_post', {slug: post.slug}) }}">
                                     {{ post.title|slice(0,100) ~ "..." }}
                                 </a>
                             </div>

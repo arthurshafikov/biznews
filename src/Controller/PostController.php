@@ -40,7 +40,7 @@ class PostController extends Controller
         ]);
     }
 
-    #[Route('/posts/{post}', name: 'app_post')]
+    #[Route('/posts/{slug}', name: 'app_post')]
     public function show(Post $post): Response
     {
         return $this->render('post/single.html.twig', [

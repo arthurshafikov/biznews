@@ -9,7 +9,7 @@
                 </a>
                 <a class="text-body" href=""><small>{{ post.createdAt }}</small></a>
             </div>
-            <a class="small text-body text-uppercase font-weight-medium" href="{{ path('app_post', {post: post.id}) }}">
+            <a class="small text-body text-uppercase font-weight-medium" href="{{ path('app_post', {slug: post.slug}) }}">
                 {{ post.title|slice(0,55) ~ '...' }}
             </a>
         </div>

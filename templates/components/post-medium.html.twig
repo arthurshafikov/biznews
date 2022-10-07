@@ -7,7 +7,7 @@
                    href="{{ path('app_category', {slug: post.category.slug}) }}">{{ post.category.name }}</a>
                 <a class="text-body" href=""><small>{{ post.createdAt }}</small></a>
             </div>
-            <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href="{{ path('app_post', {post: post.id}) }}">
+            <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href="{{ path('app_post', {slug: post.slug}) }}">
                 {{ post.title|slice(0,31) ~ '...' }}
             </a>
 
