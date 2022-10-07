@@ -22,6 +22,24 @@ class PostController extends Controller
         ]);
     }
 
+    #[Route('/search', name: 'app_posts_search')]
+    public function search(PostRepository $postRepository, Request $request): Response
+    {
+        $posts = $postRepository->getPostsBySearch(
+            $request->get('s'),
+            $this->getPostsPerPageSetting(),
+            $request->get('page', 1)
+        );
+        $postsCount = $postRepository->getPostsCount([
+            's' => $request->get('s'),
+        ]);
+
+        return $this->render('post/search.html.twig', [
+            'posts' => $posts,
+            'pagesCount' => ceil($postsCount / $this->getPostsPerPageSetting()),
+        ]);
+    }
+
     #[Route('/posts/{post}', name: 'app_post')]
     public function show(Post $post): Response
     {

@@ -56,6 +56,10 @@ class PostRepository extends ServiceEntityRepository
             if (array_key_exists('category_id', $params)) {
                 $this->setCategoryInQueryBuilder($queryBuilder, $params['category_id']);
             }
+
+            if (array_key_exists('s', $params)) {
+                $this->setSearchInQueryBuilder($queryBuilder, $params['s']);
+            }
         }, 0, 1);
 
         return $result[0][1] ?? 0;
@@ -64,6 +68,13 @@ class PostRepository extends ServiceEntityRepository
     public function getLatestPosts(int $limit = 4, int $page = 1): array
     {
         return $this->getLatestPostsQueryWrapper(fn () => null, $limit, $page);
+    }
+
+    public function getPostsBySearch(string $query, int $limit = 4, int $page = 1): array
+    {
+        return $this->getLatestPostsQueryWrapper(function (QueryBuilder $queryBuilder) use ($query) {
+            $this->setSearchInQueryBuilder($queryBuilder, $query);
+        }, $limit, $page);
     }
 
     public function getTrendingPosts(int $limit = 5): array
@@ -100,5 +111,11 @@ class PostRepository extends ServiceEntityRepository
     {
         $queryBuilder->andWhere('post.category = :id')
             ->setParameter('id', $categoryID);
+    }
+
+    private function setSearchInQueryBuilder(QueryBuilder $queryBuilder, string $query)
+    {
+        $queryBuilder->andWhere($queryBuilder->expr()->like('post.title', ':query'))
+            ->setParameter('query', "%$query%");
     }
 }
