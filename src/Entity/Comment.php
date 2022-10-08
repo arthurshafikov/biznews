@@ -20,14 +20,14 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private ?Post $post = null;
 
-    #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments')]
     private ?self $parent = null;
 
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class, fetch: 'EAGER')]
     private Collection $comments;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -124,9 +124,9 @@ class Comment
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): string
     {
-        return $this->created_at;
+        return $this->created_at->format('d M Y');
     }
 
     public function setCreatedAt(\DateTimeImmutable $created_at): self
