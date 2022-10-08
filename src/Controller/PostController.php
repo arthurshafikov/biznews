@@ -25,14 +25,16 @@ class PostController extends Controller
     #[Route('/search', name: 'app_posts_search')]
     public function search(PostRepository $postRepository, Request $request): Response
     {
+        $searchParams = [
+            's' => $request->get('s'),
+            'date' => $request->get('date'),
+        ];
         $posts = $postRepository->getPostsBySearch(
-            $request->get('s'),
+            $searchParams,
             $this->getPostsPerPageSetting(),
             $request->get('page', 1)
         );
-        $postsCount = $postRepository->getPostsCount([
-            's' => $request->get('s'),
-        ]);
+        $postsCount = $postRepository->getPostsCount($searchParams);
 
         return $this->render('post/search.html.twig', [
             'posts' => $posts,

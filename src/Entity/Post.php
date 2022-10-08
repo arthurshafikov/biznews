@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -11,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
 {
+    public const DATE_FORMAT_FOR_SEARCH = 'mdY';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -118,6 +121,11 @@ class Post
     public function getCreatedAt(): string
     {
         return $this->created_at->format('M d, Y');
+    }
+
+    public function getRawCreatedAt(): DateTimeInterface
+    {
+        return $this->created_at;
     }
 
     public function setCreatedAt(\DateTimeImmutable $created_at): self

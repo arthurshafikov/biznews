@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Post;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\QueryBuilder;
@@ -53,12 +55,19 @@ class PostRepository extends ServiceEntityRepository
         $result = $this->getLatestPostsQueryWrapper(function (QueryBuilder $queryBuilder) use ($params) {
             $queryBuilder->select('count(post.id)')->setMaxResults(null);
 
-            if (array_key_exists('category_id', $params)) {
+            if ($params['category_id'] ?? false) {
                 $this->setCategoryInQueryBuilder($queryBuilder, $params['category_id']);
             }
 
-            if (array_key_exists('s', $params)) {
+            if ($params['s'] ?? false) {
                 $this->setSearchInQueryBuilder($queryBuilder, $params['s']);
+            }
+
+            if ($params['date'] ?? false) {
+                $this->setDateInQueryBuilder(
+                    $queryBuilder,
+                    DateTime::createFromFormat(Post::DATE_FORMAT_FOR_SEARCH, $params['date'])
+                );
             }
         }, 0, 1);
 
@@ -70,10 +79,19 @@ class PostRepository extends ServiceEntityRepository
         return $this->getLatestPostsQueryWrapper(fn () => null, $limit, $page);
     }
 
-    public function getPostsBySearch(string $query, int $limit = 4, int $page = 1): array
+    public function getPostsBySearch(array $params, int $limit = 4, int $page = 1): array
     {
-        return $this->getLatestPostsQueryWrapper(function (QueryBuilder $queryBuilder) use ($query) {
-            $this->setSearchInQueryBuilder($queryBuilder, $query);
+        return $this->getLatestPostsQueryWrapper(function (QueryBuilder $queryBuilder) use ($params) {
+            if ($params['s'] ?? false) {
+                $this->setSearchInQueryBuilder($queryBuilder, $params['s']);
+            }
+
+            if ($params['date'] ?? false) {
+                $this->setDateInQueryBuilder(
+                    $queryBuilder,
+                    DateTime::createFromFormat(Post::DATE_FORMAT_FOR_SEARCH, $params['date'])
+                );
+            }
         }, $limit, $page);
     }
 
@@ -117,5 +135,11 @@ class PostRepository extends ServiceEntityRepository
     {
         $queryBuilder->andWhere($queryBuilder->expr()->like('post.title', ':query'))
             ->setParameter('query', "%$query%");
+    }
+
+    private function setDateInQueryBuilder(QueryBuilder $queryBuilder, DateTimeInterface $date)
+    {
+        $queryBuilder->andWhere('DATE(post.created_at) = :date')
+            ->setParameter('date', $date->format('Y-m-d'));
     }
 }
