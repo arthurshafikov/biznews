@@ -17,8 +17,6 @@ class CommentController extends AbstractController
     #[Route('/posts/{slug}/comment', name: 'app_comment')]
     public function comment(Post $post, Request $request, CommentRepository $commentRepository): Response
     {
-        // user unauth middleware
-
         $comment = new Comment();
         $comment->setPost($post);
         $comment->setUser($this->getUser());
