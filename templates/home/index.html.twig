@@ -11,7 +11,7 @@
                     <div class="owl-carousel main-carousel position-relative">
                         {% for post in sliderNews %}
                             <div class="position-relative overflow-hidden" style="height: 500px;">
-                                <img class="img-fluid h-100" src="{{ post.GetImage() }}" style="object-fit: cover;">
+                                <img class="img-fluid h-100" src="{{ post.imagePath }}" style="object-fit: cover;">
                                 <div class="overlay">
                                     <div class="mb-2">
                                         <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
@@ -33,7 +33,7 @@
                         {% for post in nearToSliderNews %}
                             <div class="col-md-6 px-0">
                                 <div class="position-relative overflow-hidden" style="height: 250px;">
-                                    <img class="img-fluid w-100 h-100" src="{{ post.GetImage() }}" style="object-fit: cover;">
+                                    <img class="img-fluid w-100 h-100" src="{{ post.imagePath }}" style="object-fit: cover;">
                                     <div class="overlay">
                                         <div class="mb-2">
                                             <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
@@ -90,7 +90,7 @@
             <div class="owl-carousel news-carousel carousel-item-4 position-relative">
                 {% for post in featuredNews %}
                     <div class="position-relative overflow-hidden" style="height: 300px;">
-                        <img class="img-fluid h-100" src="{{ post.getImage() }}" style="object-fit: cover;">
+                        <img class="img-fluid h-100" src="{{ post.imagePath }}" style="object-fit: cover;">
                         <div class="overlay">
                             <div class="mb-2">
                                 <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"

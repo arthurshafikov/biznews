@@ -84,6 +84,11 @@ class Post
 
     public function getImage(): ?string
     {
+        return $this->image;
+    }
+
+    public function getImagePath(): string
+    {
         return '/img/' . $this->image;
     }
 
