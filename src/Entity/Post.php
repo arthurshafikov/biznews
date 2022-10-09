@@ -31,13 +31,6 @@ class Post
     private ?string $title = null;
 
     #[ORM\Column(length: 100)]
-    #[Assert\NotBlank]
-    #[Assert\Length(
-        min: 10,
-        max: 100,
-        minMessage: 'Your slug must be at least {{ limit }} characters long',
-        maxMessage: 'Your slug cannot be longer than {{ limit }} characters',
-    )]
     private ?string $slug = null;
 
     #[ORM\Column(length: 100)]
