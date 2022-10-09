@@ -49,8 +49,7 @@ class Post
     private ?string $content = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank]
-    private ?int $views = null;
+    private int $views;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
@@ -67,6 +66,7 @@ class Post
 
     public function __construct()
     {
+        $this->views = 0;
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
