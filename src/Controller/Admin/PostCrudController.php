@@ -21,6 +21,10 @@ class PostCrudController extends AbstractCrudController
         yield TextField::new('image')->hideOnIndex();
         yield TextField::new('content')->hideOnIndex();
         yield AssociationField::new('category')->autocomplete();
+        yield AssociationField::new('tags')
+            ->autocomplete()
+            ->setFormTypeOption('by_reference', false)
+            ->hideOnIndex();
         yield 'created_at';
     }
 }
