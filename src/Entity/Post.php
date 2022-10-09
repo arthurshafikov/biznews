@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
@@ -20,18 +21,35 @@ class Post
     private ?int $id = null;
 
     #[ORM\Column(length: 60)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 10,
+        max: 60,
+        minMessage: 'Your title must be at least {{ limit }} characters long',
+        maxMessage: 'Your title cannot be longer than {{ limit }} characters',
+    )]
     private ?string $title = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 10,
+        max: 100,
+        minMessage: 'Your slug must be at least {{ limit }} characters long',
+        maxMessage: 'Your slug cannot be longer than {{ limit }} characters',
+    )]
     private ?string $slug = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
     private ?string $image = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
     private ?string $content = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
     private ?int $views = null;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
