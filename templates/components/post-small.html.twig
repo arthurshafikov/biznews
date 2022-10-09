@@ -5,9 +5,9 @@
             <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="{{ path('app_category', {slug: post.category.slug}) }}">
                 {{ post.category.name }}
             </a>
-            <a class="text-body" href="{{ path('app_posts_search', {date: post.rawCreatedAt.format(
+            <a class="text-body" href="{{ path('app_posts_search', {date: post.createdAt.format(
                 constant('App\\Entity\\Post::DATE_FORMAT_FOR_SEARCH')
-            )}) }}"><small>{{ post.createdAt }}</small></a>
+            )}) }}"><small>{{ post.formattedCreatedAt }}</small></a>
         </div>
         <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{{ path('app_post', {slug: post.slug}) }}">
             {{ post.title|slice(0,31) ~ '...' }}

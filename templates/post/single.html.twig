@@ -17,9 +17,9 @@
                             <div class="mb-3">
                                 <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
                                    href="">{{ post.category.name }}</a>
-                                <a class="text-body" href="{{ path('app_posts_search', {date: post.rawCreatedAt.format(
+                                <a class="text-body" href="{{ path('app_posts_search', {date: post.createdAt.format(
                                     constant('App\\Entity\\Post::DATE_FORMAT_FOR_SEARCH')
-                                )}) }}">{{ post.createdAt }}</a>
+                                )}) }}">{{ post.formattedCreatedAt }}</a>
                             </div>
                             <h1 class="mb-3 text-secondary text-uppercase font-weight-bold">{{ post.title }}</h1>
                             {{ post.content }}

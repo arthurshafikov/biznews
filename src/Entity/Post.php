@@ -118,14 +118,14 @@ class Post
         return $this;
     }
 
-    public function getCreatedAt(): string
-    {
-        return $this->created_at->format('M d, Y');
-    }
-
-    public function getRawCreatedAt(): DateTimeInterface
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->created_at;
+    }
+
+    public function getFormattedCreatedAt(): string
+    {
+        return $this->created_at->format('M d, Y');
     }
 
     public function setCreatedAt(\DateTimeImmutable $created_at): self
