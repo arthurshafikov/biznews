@@ -1,0 +1,6 @@
+*
+*/
+!.gitignore
+
+# these images are needed when using fixtures, in real application I'd remove them
+!news-*
