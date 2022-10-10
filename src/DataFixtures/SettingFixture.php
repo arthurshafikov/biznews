@@ -21,6 +21,9 @@ class SettingFixture extends Fixture implements DependentFixtureInterface
         Setting::INSTAGRAM_LINK => 'https://instagram.com',
         Setting::YOUTUBE_LINK => 'https://youtube.com',
         Setting::VIMEO_LINK => 'https://vimeo.com',
+        Setting::COMPANY_ADDRESS => '123 Street, New York, USA',
+        Setting::COMPANY_PHONE => '+012 345 67890',
+        Setting::COMPANY_EMAIL => 'info@biznews.com',
     ];
 
     public function load(ObjectManager $manager): void

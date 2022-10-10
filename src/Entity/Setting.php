@@ -19,6 +19,9 @@ class Setting
     public const INSTAGRAM_LINK = 'instagram_link';
     public const YOUTUBE_LINK = 'youtube_link';
     public const VIMEO_LINK = 'vimeo_link';
+    public const COMPANY_ADDRESS = 'company_address';
+    public const COMPANY_PHONE = 'company_phone';
+    public const COMPANY_EMAIL = 'company_email';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
