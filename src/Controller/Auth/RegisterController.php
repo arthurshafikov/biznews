@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Auth;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class RegisterController extends Controller
+class RegisterController extends AbstractController
 {
     #[Route('/register', name: 'app_register_show', methods: ['GET'])]
     public function showRegistrationForm(): Response
