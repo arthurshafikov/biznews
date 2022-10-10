@@ -27,7 +27,6 @@ class RegisterController extends AbstractController
     #[Route('/register', name: 'app_register', methods: ['POST'])]
     public function register(
         Request $request,
-        ValidatorInterface $validator,
         ManagerRegistry $doctrine,
         UserPasswordHasherInterface $hasher,
     ): Response {
@@ -45,10 +44,10 @@ class RegisterController extends AbstractController
          * @var $user User
          */
         $user = $userForm->getData();
+        $user->setAvatar('default.jpg');
         $user->setVerified(false);
         $user->setPassword($hasher->hashPassword($user, $user->getPassword()));
         $user->setCreatedAt(DateTimeImmutable::createFromMutable(new DateTime()));
-        $user->setRoles([]); // todo user role
 
         $entityManager->persist($user);
         $entityManager->flush();

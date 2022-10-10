@@ -31,7 +31,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
     private ?string $avatar = null;
 
     #[ORM\Column(length: 180, unique: true)]
@@ -151,7 +150,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getAvatar(): ?string
     {
-        return '/img/' . $this->avatar;
+        return '/storage/' . $this->avatar;
     }
 
     public function setAvatar(string $avatar): self
