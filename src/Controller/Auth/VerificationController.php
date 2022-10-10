@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VerificationController extends AbstractController
 {
-    #[Route('/verify', name: 'app_verification')]
+    #[Route('/verify', name: 'app_verify')]
     public function verify(Request $request, UserRepository $userRepository): Response
     {
         $user = $userRepository->findOneBy([
