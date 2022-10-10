@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Events\SubscribedEmailCreated;
+use App\Events\UserRegistered;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -16,6 +17,7 @@ class Kernel extends BaseKernel
     {
         $container->addCompilerPass(new AddEventAliasesPass([
             SubscribedEmailCreated::class => SubscribedEmailCreated::NAME,
+            UserRegistered::class => UserRegistered::NAME,
         ]));
     }
 }

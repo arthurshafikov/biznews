@@ -3,19 +3,24 @@
 namespace App\Controller\Auth;
 
 use App\Entity\User;
+use App\Events\UserRegistered;
 use App\Form\RegistrationFormType;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RegisterController extends AbstractController
 {
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
+    {
+    }
+
     #[Route('/register', name: 'app_register_show', methods: ['GET'])]
     public function showRegistrationForm(): Response
     {
@@ -56,6 +61,15 @@ class RegisterController extends AbstractController
             'message' => 'You have registered successfully',
         ]);
 
+        $this->eventDispatcher->dispatch(
+            new UserRegistered($user, $this->getToken($user->getEmail())), UserRegistered::NAME
+        );
+
         return $this->redirectToRoute('app_login');
+    }
+
+    private function getToken(string $email): string // todo remove duplication of code?
+    {
+        return sha1($email . $this->getParameter('app.secret'));
     }
 }
