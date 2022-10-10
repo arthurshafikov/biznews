@@ -15,6 +15,12 @@ class SettingFixture extends Fixture implements DependentFixtureInterface
         Setting::FEATURED_TAG_ID => 'tag_1',
         Setting::BREAKING_TAG_ID => 'tag_0',
         Setting::POSTS_PER_PAGE => 8,
+        Setting::FACEBOOK_LINK => 'https://facebook.com',
+        Setting::TWITTER_LINK => 'https://twitter.com',
+        Setting::LINKEDIN_LINK => 'https://linkedin.com',
+        Setting::INSTAGRAM_LINK => 'https://instagram.com',
+        Setting::YOUTUBE_LINK => 'https://youtube.com',
+        Setting::VIMEO_LINK => 'https://vimeo.com',
     ];
 
     public function load(ObjectManager $manager): void

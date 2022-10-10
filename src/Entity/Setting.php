@@ -13,6 +13,12 @@ class Setting
     public const FEATURED_TAG_ID = 'featured_tag_id';
     public const BREAKING_TAG_ID = 'breaking_tag_id';
     public const POSTS_PER_PAGE = 'posts_per_page';
+    public const FACEBOOK_LINK = 'facebook_link';
+    public const TWITTER_LINK = 'twitter_link';
+    public const LINKEDIN_LINK = 'linkedin_link';
+    public const INSTAGRAM_LINK = 'instagram_link';
+    public const YOUTUBE_LINK = 'youtube_link';
+    public const VIMEO_LINK = 'vimeo_link';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
