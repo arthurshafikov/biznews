@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\SubscribedEmail;
 use App\Events\SubscribedEmailCreated;
 use App\Repository\SubscribedEmailRepository;
+use App\Service\TokenGeneratorService;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -17,9 +18,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SubscribeNewsletterController extends AbstractController
 {
-    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
-    {
-    }
+    public function __construct(
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly TokenGeneratorService $tokenGeneratorService
+    ) {}
 
     #[Route('/subscribe/newsletter', name: 'app_newsletter_subscribe')]
     public function subscribe(Request $request, SubscribedEmailRepository $repository): Response
@@ -28,12 +30,15 @@ class SubscribeNewsletterController extends AbstractController
 
         $subscribeEmail = new SubscribedEmail();
         $subscribeEmail->setEmail($request->get('email'));
-        $subscribeEmail->setToken($this->generateToken($request->get('email'), $now));
         $subscribeEmail->setVerified(false);
         $subscribeEmail->setCreatedAt($now);
         $repository->add($subscribeEmail, true);
 
-        $this->eventDispatcher->dispatch(new SubscribedEmailCreated($subscribeEmail), SubscribedEmailCreated::NAME);
+        $this->eventDispatcher->dispatch(
+            new SubscribedEmailCreated(
+                $subscribeEmail,
+                $this->tokenGeneratorService->generateToken($subscribeEmail->getEmail())
+            ), SubscribedEmailCreated::NAME);
 
         $request->getSession()->getFlashBag()->add('session-message',  [
             'title' => 'Congratulations!',
@@ -51,7 +56,10 @@ class SubscribeNewsletterController extends AbstractController
             'email' => $request->get('email'),
         ]);
 
-        if ($subscribedEmail !== null && $subscribedEmail->getToken() === $request->get('token')) {
+        if (
+            $subscribedEmail !== null &&
+            $this->tokenGeneratorService->generateToken($subscribedEmail->getEmail()) === $request->get('token')
+        ) {
             $subscribedEmail->setVerified(true);
             $repository->add($subscribedEmail, true);
 
@@ -68,10 +76,5 @@ class SubscribeNewsletterController extends AbstractController
         }
 
         return new RedirectResponse($this->generateUrl('app_home'));
-    }
-
-    private function generateToken(string $email, DateTimeInterface $timestamp): string
-    {
-        return sha1($email . $timestamp->format('Y-m-d H-s-m'));
     }
 }

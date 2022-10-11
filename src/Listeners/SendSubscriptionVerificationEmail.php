@@ -15,7 +15,7 @@ class SendSubscriptionVerificationEmail extends SendVerificationEmail
     {
         $this->send($event->subscribedEmail->getEmail(), $this->urlGenerator->generate('app_newsletter_confirm', [
             'email' => $event->subscribedEmail->getEmail(),
-            'token' => $event->subscribedEmail->getToken(),
+            'token' => $event->token,
         ], UrlGeneratorInterface::ABSOLUTE_URL));
     }
 }

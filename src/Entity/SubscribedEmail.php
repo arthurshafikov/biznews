@@ -16,9 +16,6 @@ class SubscribedEmail
     #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $token = null;
-
     #[ORM\Column(options: ["default" => false])]
     private ?bool $verified = null;
 
@@ -38,18 +35,6 @@ class SubscribedEmail
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getToken(): ?string
-    {
-        return $this->token;
-    }
-
-    public function setToken(string $token): self
-    {
-        $this->token = $token;
 
         return $this;
     }

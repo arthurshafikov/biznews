@@ -9,7 +9,7 @@ class SubscribedEmailCreated extends Event
 {
     public const NAME = 'subscribe-email.created';
 
-    public function __construct(public readonly SubscribedEmail $subscribedEmail)
+    public function __construct(public readonly SubscribedEmail $subscribedEmail, public readonly string $token)
     {
     }
 }
