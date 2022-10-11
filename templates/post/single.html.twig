@@ -39,7 +39,7 @@
                             <h4 class="m-0 text-uppercase font-weight-bold">{{ post.comments.count() }} Comments</h4>
                         </div>
                         <div class="bg-white border border-top-0 p-4">
-                            {% for comment in post.comments %}
+                            {% for comment in comments %}
                                 <div class="media mb-4">
                                     <img src="{{ comment.user.avatarPath }}" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
                                     <div class="media-body">

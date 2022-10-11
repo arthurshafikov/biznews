@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Post;
 use App\Repository\PostRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,6 +48,7 @@ class PostController extends Controller
     {
         return $this->render('post/single.html.twig', [
             'post' => $post,
+            'comments' => $post->getComments()->filter(fn (Comment $comment) => $comment->getParent() === null),
         ]);
     }
 }
