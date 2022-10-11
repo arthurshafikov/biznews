@@ -16,6 +16,7 @@ class ProfileFormType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('email')
             ->add('avatar', FileType::class, [
                 'mapped' => false,
                 'required' => false,
@@ -30,7 +31,6 @@ class ProfileFormType extends AbstractType
                     ])
                 ],
             ])
-//            ->add('email') todo
             ->add('submit', SubmitType::class);
     }
 

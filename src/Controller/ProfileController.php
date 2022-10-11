@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Entity\User;
+use App\Events\UserChangedEmail;
 use App\Form\ProfileFormType;
 use App\Repository\UserRepository;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
@@ -19,7 +21,10 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProfileController extends AbstractController
 {
-    public function __construct(private readonly SluggerInterface $slugger) {}
+    public function __construct(
+        private readonly SluggerInterface $slugger,
+        private readonly EventDispatcherInterface $eventDispatcher
+    ) {}
 
     #[Route('/profile', name: 'app_profile', methods: ['GET'])]
     public function showProfile(): Response
@@ -32,6 +37,7 @@ class ProfileController extends AbstractController
     {
         $user = $this->getUser();
         $profileForm = $this->createForm(ProfileFormType::class, $user);
+        $userOldEmail = $user->getEmail();
         $profileForm->handleRequest($request);
         if (!$profileForm->isValid()) {
             return $this->returnForm($profileForm);
@@ -51,6 +57,14 @@ class ProfileController extends AbstractController
 
                 return $this->returnForm($profileForm);
             }
+        }
+
+        if ($userOldEmail !== $user->getEmail()) {
+            $user->setVerified(false);
+
+            $this->eventDispatcher->dispatch(
+                new UserChangedEmail($user, $this->getToken($user->getEmail())), UserChangedEmail::NAME
+            );
         }
         $userRepository->add($user, true);
 
@@ -82,5 +96,10 @@ class ProfileController extends AbstractController
             'user' => $this->getUser(),
             'form' => $form->createView(),
         ]);
+    }
+
+    private function getToken(string $email): string // todo remove duplication of code?
+    {
+        return sha1($email . $this->getParameter('app.secret'));
     }
 }
