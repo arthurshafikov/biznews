@@ -3,6 +3,7 @@
 namespace App\Controller\Auth;
 
 use App\Repository\UserRepository;
+use App\Service\TokenGeneratorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VerificationController extends AbstractController
 {
+    public function __construct(private readonly TokenGeneratorService $tokenGeneratorService) {}
+
     #[Route('/verify', name: 'app_verify')]
     public function verify(Request $request, UserRepository $userRepository): Response
     {
@@ -18,7 +21,10 @@ class VerificationController extends AbstractController
             'email' => $request->get('email'),
         ]);
 
-        if ($user !== null && $this->getToken($user->getEmail()) === $request->get('token')) {
+        if (
+            $user !== null &&
+            $this->tokenGeneratorService->generateToken($user->getEmail()) === $request->get('token')
+        ) {
             $user->setVerified(true);
             $userRepository->add($user, true);
 
@@ -35,10 +41,5 @@ class VerificationController extends AbstractController
         }
 
         return new RedirectResponse($this->generateUrl('app_home'));
-    }
-
-    private function getToken(string $email): string // todo remove duplication of code?
-    {
-        return sha1($email . $this->getParameter('app.secret'));
     }
 }

@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Events\UserChangedEmail;
 use App\Form\ProfileFormType;
 use App\Repository\UserRepository;
+use App\Service\TokenGeneratorService;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -23,7 +24,8 @@ class ProfileController extends AbstractController
 {
     public function __construct(
         private readonly SluggerInterface $slugger,
-        private readonly EventDispatcherInterface $eventDispatcher
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly TokenGeneratorService $tokenGeneratorService
     ) {}
 
     #[Route('/profile', name: 'app_profile', methods: ['GET'])]
@@ -63,7 +65,10 @@ class ProfileController extends AbstractController
             $user->setVerified(false);
 
             $this->eventDispatcher->dispatch(
-                new UserChangedEmail($user, $this->getToken($user->getEmail())), UserChangedEmail::NAME
+                new UserChangedEmail(
+                    $user,
+                    $this->tokenGeneratorService->generateToken($user->getEmail())
+                ), UserChangedEmail::NAME
             );
         }
         $userRepository->add($user, true);
@@ -96,10 +101,5 @@ class ProfileController extends AbstractController
             'user' => $this->getUser(),
             'form' => $form->createView(),
         ]);
-    }
-
-    private function getToken(string $email): string // todo remove duplication of code?
-    {
-        return sha1($email . $this->getParameter('app.secret'));
     }
 }

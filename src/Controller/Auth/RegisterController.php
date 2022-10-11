@@ -5,6 +5,7 @@ namespace App\Controller\Auth;
 use App\Entity\User;
 use App\Events\UserChangedEmail;
 use App\Form\RegistrationFormType;
+use App\Service\TokenGeneratorService;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,9 +18,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegisterController extends AbstractController
 {
-    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
-    {
-    }
+    public function __construct(
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly TokenGeneratorService $tokenGeneratorService
+    ) {}
 
     #[Route('/register', name: 'app_register_show', methods: ['GET'])]
     public function showRegistrationForm(): Response
@@ -62,14 +64,12 @@ class RegisterController extends AbstractController
         ]);
 
         $this->eventDispatcher->dispatch(
-            new UserChangedEmail($user, $this->getToken($user->getEmail())), UserChangedEmail::NAME
+            new UserChangedEmail(
+                $user,
+                $this->tokenGeneratorService->generateToken($user->getEmail())
+            ), UserChangedEmail::NAME
         );
 
         return $this->redirectToRoute('app_login');
-    }
-
-    private function getToken(string $email): string // todo remove duplication of code?
-    {
-        return sha1($email . $this->getParameter('app.secret'));
     }
 }
