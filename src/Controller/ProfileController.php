@@ -66,17 +66,14 @@ class ProfileController extends AbstractController
         $newAvatarFilename = $this->slugger->slug(pathinfo($newAvatarFile->getClientOriginalName(), PATHINFO_FILENAME))
             . '-' . uniqid() . '.' . $newAvatarFile->guessExtension();
 
-        $newAvatarFile->move(
-            ltrim(Post::STORAGE_FOLDER, '/'), // todo remove / in const
-            $newAvatarFilename
-        );
+        $newAvatarFile->move(Post::STORAGE_FOLDER, $newAvatarFilename);
 
         return $newAvatarFilename;
     }
 
     private function removeOldAvatarFile(string $oldAvatarFilename): void
     {
-        (new Filesystem())->remove(ltrim(Post::STORAGE_FOLDER, '/') . '/' . $oldAvatarFilename);
+        (new Filesystem())->remove(Post::STORAGE_FOLDER . '/' . $oldAvatarFilename);
     }
 
     private function returnForm(FormInterface $form): Response

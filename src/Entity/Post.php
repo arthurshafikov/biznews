@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Post
 {
     public const DATE_FORMAT_FOR_SEARCH = 'mdY';
-    public const STORAGE_FOLDER = '/storage';
+    public const STORAGE_FOLDER = 'storage';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -101,7 +101,7 @@ class Post
 
     public function getImagePath(): string
     {
-        return static::STORAGE_FOLDER . '/' . $this->image;
+        return '/' . static::STORAGE_FOLDER . '/' . $this->image;
     }
 
     public function setImage(string $image): self

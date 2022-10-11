@@ -155,7 +155,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getAvatarPath(): string
     {
-        return '/storage/' . $this->avatar;
+        return '/' . Post::STORAGE_FOLDER . '/' . $this->avatar;
     }
 
     public function setAvatar(string $avatar): self
