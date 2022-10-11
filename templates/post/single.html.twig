@@ -41,7 +41,7 @@
                         <div class="bg-white border border-top-0 p-4">
                             {% for comment in post.comments %}
                                 <div class="media mb-4">
-                                    <img src="{{ comment.user.avatar }}" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                    <img src="{{ comment.user.avatarPath }}" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
                                     <div class="media-body">
                                         <h6><a class="text-secondary font-weight-bold" href="">{{ comment.user.name }}</a> <small><i>{{ comment.createdAt }}</i></small></h6>
                                         <p>{{ comment.content }}</p>
@@ -49,7 +49,7 @@
 
                                         {% for childComment in comment.comments %}
                                             <div class="media mt-4">
-                                                <img src="{{ childComment.user.avatar }}" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                                <img src="{{ childComment.user.avatarPath }}" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
                                                 <div class="media-body">
                                                     <h6><a class="text-secondary font-weight-bold" href="">{{ childComment.user.name }}</a> <small><i>{{ childComment.createdAt }}</i></small></h6>
                                                     <p>{{ childComment.content }}</p>
