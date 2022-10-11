@@ -3,7 +3,7 @@
 namespace App\Controller\Auth;
 
 use App\Entity\User;
-use App\Events\UserRegistered;
+use App\Events\UserChangedEmail;
 use App\Form\RegistrationFormType;
 use DateTime;
 use DateTimeImmutable;
@@ -62,7 +62,7 @@ class RegisterController extends AbstractController
         ]);
 
         $this->eventDispatcher->dispatch(
-            new UserRegistered($user, $this->getToken($user->getEmail())), UserRegistered::NAME
+            new UserChangedEmail($user, $this->getToken($user->getEmail())), UserChangedEmail::NAME
         );
 
         return $this->redirectToRoute('app_login');
