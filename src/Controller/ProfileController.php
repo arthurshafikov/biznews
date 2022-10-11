@@ -50,7 +50,9 @@ class ProfileController extends AbstractController
         if ($newAvatarFile = $profileForm->get('avatar')->getData()) {
             try {
                 $newAvatarFilename = $this->uploadNewAvatar($newAvatarFile);
-                $this->removeOldAvatarFile($user->getAvatar());
+                if ($user->getAvatar() !== null) {
+                    $this->removeOldAvatarFile($user->getAvatar());
+                }
                 $user->setAvatar($newAvatarFilename);
             } catch (Exception $exception) {
                 $profileForm

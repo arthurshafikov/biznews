@@ -51,7 +51,6 @@ class RegisterController extends AbstractController
          * @var $user User
          */
         $user = $userForm->getData();
-        $user->setAvatar('default.jpg');
         $user->setVerified(false);
         $user->setPassword($hasher->hashPassword($user, $user->getPassword()));
         $user->setCreatedAt(DateTimeImmutable::createFromMutable(new DateTime()));

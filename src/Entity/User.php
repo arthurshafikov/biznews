@@ -30,7 +30,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
 
     #[ORM\Column(length: 180, unique: true)]
@@ -155,7 +155,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getAvatarPath(): string
     {
-        return '/' . Post::STORAGE_FOLDER . '/' . $this->avatar;
+        return $this->getAvatar() === null
+            ? '/' . Post::STORAGE_FOLDER . '/default.jpg'
+            : '/' . Post::STORAGE_FOLDER . '/' . $this->avatar;
     }
 
     public function setAvatar(string $avatar): self
