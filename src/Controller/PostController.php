@@ -44,8 +44,11 @@ class PostController extends Controller
     }
 
     #[Route('/posts/{slug}', name: 'app_post')]
-    public function show(Post $post): Response
+    public function show(Post $post, PostRepository $postRepository): Response
     {
+        $post->setViews($post->getViews() + 1);
+        $postRepository->add($post, true);
+
         return $this->render('post/single.html.twig', [
             'post' => $post,
             'comments' => $post->getComments()->filter(fn (Comment $comment) => $comment->getParent() === null),
