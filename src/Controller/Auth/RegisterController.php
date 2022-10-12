@@ -2,7 +2,6 @@
 
 namespace App\Controller\Auth;
 
-use App\Entity\User;
 use App\Events\UserChangedEmail;
 use App\Form\RegistrationFormType;
 use App\Service\TokenGeneratorService;
@@ -21,7 +20,8 @@ class RegisterController extends AbstractController
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly TokenGeneratorService $tokenGeneratorService
-    ) {}
+    ) {
+    }
 
     #[Route('/register', name: 'app_register_show', methods: ['GET'])]
     public function showRegistrationForm(): Response
@@ -58,7 +58,7 @@ class RegisterController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        $request->getSession()->getFlashBag()->add('session-message',  [
+        $request->getSession()->getFlashBag()->add('session-message', [
             'message' => 'You have registered successfully',
         ]);
 
@@ -66,7 +66,8 @@ class RegisterController extends AbstractController
             new UserChangedEmail(
                 $user,
                 $this->tokenGeneratorService->generateToken($user->getEmail())
-            ), UserChangedEmail::NAME
+            ),
+            UserChangedEmail::NAME
         );
 
         return $this->redirectToRoute('app_login');

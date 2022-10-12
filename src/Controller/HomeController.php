@@ -22,10 +22,12 @@ class HomeController extends Controller
             $settingRepository->getSettingValue(Setting::NEAR_TO_SLIDER_POSTS_CATEGORY_ID)
         );
         $breakingNews = $postRepository->getPostsByTagID(
-            $settingRepository->getSettingValue(Setting::BREAKING_TAG_ID), 3
+            $settingRepository->getSettingValue(Setting::BREAKING_TAG_ID),
+            3
         );
         $featuredNews = $postRepository->getPostsByTagID(
-            $settingRepository->getSettingValue(Setting::FEATURED_TAG_ID), 8
+            $settingRepository->getSettingValue(Setting::FEATURED_TAG_ID),
+            8
         );
         $latestNews = $postRepository->getLatestPosts(static::NUMBER_OF_LATEST_POSTS);
 

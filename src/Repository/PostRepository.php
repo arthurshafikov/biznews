@@ -116,7 +116,7 @@ class PostRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('post')
             ->orderBy('post.created_at', 'DESC')
             ->setMaxResults($limit)
-            ->setFirstResult($limit * ($page-1));
+            ->setFirstResult($limit * ($page - 1));
 
         $callback($queryBuilder);
 

@@ -26,7 +26,7 @@ class CommentController extends AbstractController
 
         $commentRepository->add($comment, true);
 
-        $request->getSession()->getFlashBag()->add('session-message',  [
+        $request->getSession()->getFlashBag()->add('session-message', [
             'message' => 'Comment added successfully!',
         ]);
 

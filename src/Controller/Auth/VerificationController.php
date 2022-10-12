@@ -12,7 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VerificationController extends AbstractController
 {
-    public function __construct(private readonly TokenGeneratorService $tokenGeneratorService) {}
+    public function __construct(private readonly TokenGeneratorService $tokenGeneratorService)
+    {
+    }
 
     #[Route('/verify', name: 'app_verify')]
     public function verify(Request $request, UserRepository $userRepository): Response

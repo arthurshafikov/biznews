@@ -13,9 +13,9 @@ class LoginController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-         if ($this->getUser()) {
-             return $this->redirectToRoute('app_home');
-         }
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_home');
+        }
 
         $loginForm = $this->createForm(LoginFormType::class, options: [
             'action' => $this->generateUrl('app_login'),

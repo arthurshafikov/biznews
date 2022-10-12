@@ -47,7 +47,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        $request->getSession()->getFlashBag()->add('session-message',  [
+        $request->getSession()->getFlashBag()->add('session-message', [
             'title' => 'Welcome, ' . $token->getUser()->getName(),
             'message' => 'You have been logged in successfully',
         ]);

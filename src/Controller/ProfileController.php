@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Post;
-use App\Entity\User;
 use App\Events\UserChangedEmail;
 use App\Form\ProfileFormType;
 use App\Repository\UserRepository;
@@ -26,7 +25,8 @@ class ProfileController extends AbstractController
         private readonly SluggerInterface $slugger,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly TokenGeneratorService $tokenGeneratorService
-    ) {}
+    ) {
+    }
 
     #[Route('/profile', name: 'app_profile', methods: ['GET'])]
     public function showProfile(): Response
@@ -70,12 +70,13 @@ class ProfileController extends AbstractController
                 new UserChangedEmail(
                     $user,
                     $this->tokenGeneratorService->generateToken($user->getEmail())
-                ), UserChangedEmail::NAME
+                ),
+                UserChangedEmail::NAME
             );
         }
         $userRepository->add($user, true);
 
-        $request->getSession()->getFlashBag()->add('session-message',  [
+        $request->getSession()->getFlashBag()->add('session-message', [
             'message' => 'You have successfully changed profile info!',
         ]);
 

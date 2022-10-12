@@ -8,14 +8,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class CategoryCrudController extends AbstractCrudController
 {
-    public static function getEntityFqcn(): string
-    {
-        return Category::class;
-    }
-
     public function configureFields(string $pageName): iterable
     {
         yield 'name';
         yield AssociationField::new('posts')->autocomplete()->hideWhenUpdating();
+    }
+
+    public static function getEntityFqcn(): string
+    {
+        return Category::class;
     }
 }

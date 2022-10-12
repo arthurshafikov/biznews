@@ -9,15 +9,15 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 
 class SubscribedEmailCrudController extends AbstractCrudController
 {
-    public static function getEntityFqcn(): string
-    {
-        return SubscribedEmail::class;
-    }
-
     public function configureFields(string $pageName): iterable
     {
         yield 'email';
         yield BooleanField::new('verified')->hideOnIndex();
         yield DateTimeField::new('created_at');
+    }
+
+    public static function getEntityFqcn(): string
+    {
+        return SubscribedEmail::class;
     }
 }

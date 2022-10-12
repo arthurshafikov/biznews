@@ -8,7 +8,6 @@ use App\Repository\SubscribedEmailRepository;
 use App\Service\TokenGeneratorService;
 use DateTime;
 use DateTimeImmutable;
-use DateTimeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,7 +20,8 @@ class SubscribeNewsletterController extends AbstractController
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly TokenGeneratorService $tokenGeneratorService
-    ) {}
+    ) {
+    }
 
     #[Route('/subscribe/newsletter', name: 'app_newsletter_subscribe')]
     public function subscribe(Request $request, SubscribedEmailRepository $repository): Response
@@ -38,9 +38,11 @@ class SubscribeNewsletterController extends AbstractController
             new SubscribedEmailCreated(
                 $subscribeEmail,
                 $this->tokenGeneratorService->generateToken($subscribeEmail->getEmail())
-            ), SubscribedEmailCreated::NAME);
+            ),
+            SubscribedEmailCreated::NAME
+        );
 
-        $request->getSession()->getFlashBag()->add('session-message',  [
+        $request->getSession()->getFlashBag()->add('session-message', [
             'title' => 'Congratulations!',
             'message' => 'You have subscribed to our newsletter, ' .
                 'make sure to verify your address by following the instructions on your e-mail',

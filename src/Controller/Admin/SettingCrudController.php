@@ -9,11 +9,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class SettingCrudController extends AbstractCrudController
 {
-    public static function getEntityFqcn(): string
-    {
-        return Setting::class;
-    }
-
     public function configureActions(Actions $actions): Actions
     {
         return $actions->disable(Action::DELETE);
@@ -23,5 +18,10 @@ class SettingCrudController extends AbstractCrudController
     {
         yield 'name';
         yield 'value';
+    }
+
+    public static function getEntityFqcn(): string
+    {
+        return Setting::class;
     }
 }

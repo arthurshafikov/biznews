@@ -2,7 +2,6 @@
 
 namespace App\EventSubscriber;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
@@ -10,14 +9,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SluggerSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly ManagerRegistry $managerRegistry) {}
-
-    public static function getSubscribedEvents()
+    public function __construct(private readonly ManagerRegistry $managerRegistry)
     {
-        return [
-            BeforeEntityPersistedEvent::class => ['setEntitySlug'],
-            BeforeEntityUpdatedEvent::class => ['setEntitySlug'],
-        ];
     }
 
     public function setEntitySlug(BeforeEntityPersistedEvent|BeforeEntityUpdatedEvent $event)
@@ -56,5 +49,13 @@ class SluggerSubscriber implements EventSubscriberInterface
         }
 
         $entity->setSlug($slug);
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            BeforeEntityPersistedEvent::class => ['setEntitySlug'],
+            BeforeEntityUpdatedEvent::class => ['setEntitySlug'],
+        ];
     }
 }
