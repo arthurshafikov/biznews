@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\Setting;
 use App\Entity\SubscribedEmail;
@@ -34,6 +35,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Posts', 'fas fa-list', Post::class);
         yield MenuItem::linkToCrud('Tags', 'fas fa-list', Tag::class);
         yield MenuItem::linkToCrud('Subscribed Emails', 'fas fa-envelope', SubscribedEmail::class);
+        yield MenuItem::linkToCrud('Comments', 'fas fa-comment', Comment::class);
         yield MenuItem::linkToCrud('Settings', 'fas fa-gears', Setting::class);
     }
 }
