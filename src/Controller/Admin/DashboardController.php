@@ -8,6 +8,7 @@ use App\Entity\Post;
 use App\Entity\Setting;
 use App\Entity\SubscribedEmail;
 use App\Entity\Tag;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -36,6 +37,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Tags', 'fas fa-list', Tag::class);
         yield MenuItem::linkToCrud('Subscribed Emails', 'fas fa-envelope', SubscribedEmail::class);
         yield MenuItem::linkToCrud('Comments', 'fas fa-comment', Comment::class);
+        yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Settings', 'fas fa-gears', Setting::class);
     }
 }

@@ -16,7 +16,7 @@ class CommentCrudController extends AbstractCrudController
     {
         yield IdField::new('id')->hideWhenUpdating();
         yield AssociationField::new('post')->autocomplete();
-//        yield AssociationField::new('user')->autocomplete(); todo uncomment
+        yield AssociationField::new('user')->autocomplete();
         yield TextField::new('content')->formatValue(
             fn ($value) => substr($value, 0, 10) . "..."
         );
