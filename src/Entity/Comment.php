@@ -124,7 +124,12 @@ class Comment
         return $this;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function getFormattedCreatedAt(): string
     {
         return $this->created_at->format('d M Y');
     }
