@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Events\ContactFormSent;
+use App\Events\ContactFormSubmitted;
 use App\Form\ContactFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -30,7 +30,7 @@ class ContactController extends AbstractController
         $contactForm = $this->createForm(ContactFormType::class);
         $contactForm->handleRequest($request);
         if ($contactForm->isValid()) {
-            $this->eventDispatcher->dispatch(new ContactFormSent($contactForm->getData()), ContactFormSent::NAME);
+            $this->eventDispatcher->dispatch(new ContactFormSubmitted($contactForm->getData()), ContactFormSubmitted::NAME);
 
             $request->getSession()->getFlashBag()->add('session-message', [
                 'message' => 'Email has been sent successfully!',
