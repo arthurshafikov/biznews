@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\ContactFormSent;
 use App\Events\SubscribedEmailCreated;
 use App\Events\UserChangedEmail;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -18,6 +19,7 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new AddEventAliasesPass([
             SubscribedEmailCreated::class => SubscribedEmailCreated::NAME,
             UserChangedEmail::class => UserChangedEmail::NAME,
+            ContactFormSent::class => ContactFormSent::NAME,
         ]));
     }
 }
