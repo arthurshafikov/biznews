@@ -17,6 +17,7 @@ class ContactFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('_csrf_token')
             ->add('name', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
@@ -67,7 +68,9 @@ class ContactFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // todo csrf
+            'csrf_protection' => true,
+            'csrf_field_name' => '_csrf_token',
+            'csrf_token_id'   => 'authenticate',
         ]);
     }
 }
