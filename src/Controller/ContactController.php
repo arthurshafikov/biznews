@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Setting;
 use App\Events\ContactFormSubmitted;
 use App\Form\ContactFormType;
+use App\Repository\SettingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -14,7 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends AbstractController
 {
     public function __construct(
-        protected readonly EventDispatcherInterface $eventDispatcher
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly SettingRepository $settingRepository
     ) {
     }
 
@@ -47,6 +50,9 @@ class ContactController extends AbstractController
     {
         return $this->render('contact/index.html.twig', [
             'form' => $form->createView(),
+            'address' => $this->settingRepository->getSettingValue(Setting::COMPANY_ADDRESS),
+            'email' => $this->settingRepository->getSettingValue(Setting::COMPANY_EMAIL),
+            'phone' => $this->settingRepository->getSettingValue(Setting::COMPANY_PHONE),
         ]);
     }
 }
