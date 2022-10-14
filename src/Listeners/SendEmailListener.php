@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Throwable;
 use Twig\Environment;
 
-abstract class SendVerificationEmail
+abstract class SendEmailListener
 {
     protected const EMAIL_SUBJECT = "";
 
@@ -24,12 +24,10 @@ abstract class SendVerificationEmail
     ) {
     }
 
-    protected function send(string $to, string $url): void
+    protected function send(string $to, string $template, array $params): void
     {
         try {
-            $emailHTML = $this->twig->render('emails/email-verification.html.twig', [
-                'url' => $url,
-            ]);
+            $emailHTML = $this->twig->render($template, $params);
         } catch (Throwable $e) {
             $this->logger->error($e->getMessage());
             return;
