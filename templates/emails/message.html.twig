@@ -1,0 +1,25 @@
+{% extends 'emails/base.html.twig' %}
+
+{% block content %}
+<!-- START CENTERED WHITE CONTAINER -->
+<table role="presentation" class="main">
+    <!-- START MAIN CONTENT AREA -->
+    <tr>
+        <td class="wrapper">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        <p>Name: <strong>{{ name }}</strong></p>
+                        <p>Email: <strong>{{ email }}</strong></p>
+                        <p>Subject: <strong>{{ subject }}</strong></p>
+                        <p>Message:</p>
+                        <p>{{ message }}</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <!-- END MAIN CONTENT AREA -->
+</table>
+<!-- END CENTERED WHITE CONTAINER -->
+{% endblock %}

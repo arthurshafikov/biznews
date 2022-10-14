@@ -24,7 +24,7 @@ abstract class SendEmailListener
     ) {
     }
 
-    protected function send(string $to, string $template, array $params): void
+    protected function send(string $to, string $template, array $params = []): void
     {
         try {
             $emailHTML = $this->twig->render($template, $params);
