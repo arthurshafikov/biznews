@@ -15,7 +15,6 @@ class LoginFormType extends AbstractType
     {
         $builder
             ->setMapped(false)
-            ->add('_csrf_token')
             ->add('email')
             ->add('password', PasswordType::class)
             ->add('submit', SubmitType::class);
