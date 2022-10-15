@@ -80,7 +80,7 @@ class ProfileController extends AbstractController
             'message' => 'You have successfully changed profile info!',
         ]);
 
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_profile');
     }
 
     private function uploadNewAvatar(UploadedFile $newAvatarFile): string
