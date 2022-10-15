@@ -15,10 +15,10 @@ class Tag
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 30, unique: true)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 60)]
+    #[ORM\Column(length: 60, unique: true)]
     private ?string $slug = null;
 
     #[ORM\ManyToMany(targetEntity: Post::class, inversedBy: 'tags')]

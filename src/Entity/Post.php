@@ -31,7 +31,7 @@ class Post
     )]
     private ?string $title = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100, unique: true)]
     private ?string $slug = null;
 
     #[ORM\Column(length: 100)]
