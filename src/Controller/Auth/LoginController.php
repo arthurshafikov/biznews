@@ -17,13 +17,9 @@ class LoginController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        $loginForm = $this->createForm(LoginFormType::class, options: [
-            'action' => $this->generateUrl('app_login'),
-        ]);
-
         return $this->render('auth/login.html.twig', [
             'error' => $authenticationUtils->getLastAuthenticationError(),
-            'form' => $loginForm->createView(),
+            'form' => $this->createForm(LoginFormType::class)->createView(),
         ]);
     }
 
