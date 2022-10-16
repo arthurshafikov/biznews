@@ -39,4 +39,23 @@ class UserService
 
         $this->userRepository->add($user, true);
     }
+
+    public function verifyToken(string $email, string $token): bool
+    {
+        $user = $this->userRepository->findOneBy([
+            'email' => $email,
+        ]);
+
+        if (
+            $user !== null &&
+            $this->tokenGeneratorService->generateToken($user->getEmail()) === $token
+        ) {
+            $user->setVerified(true);
+            $this->userRepository->add($user, true);
+
+            return true;
+        }
+
+        return false;
+    }
 }
