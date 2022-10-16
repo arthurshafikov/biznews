@@ -104,6 +104,12 @@
         "app:cs-fix": [
             "phpcbf --standard=PSR12 --encoding=utf-8 -p src -p tests",
             "phpcbf --standard=ruleset.xml --extensions=php --tab-width=4 -sp src tests"
+        ],
+        "load-fixtures": [
+            "bin/console doctrine:database:drop --if-exists --force",
+            "bin/console doctrine:database:create",
+            "bin/console doctrine:schema:update --force",
+            "bin/console doctrine:fixtures:load --no-interaction"
         ]
     },
     "conflict": {
