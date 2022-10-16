@@ -1,0 +1,14 @@
+{% include 'includes/session-message.html.twig' %}
+
+{% if app.user %}
+    <div class="section-title mb-0">
+        <h4 class="m-0 text-uppercase font-weight-bold">Leave a comment</h4>
+    </div>
+    <div class="bg-white border border-top-0 p-4" id="comment-form">
+        {{ form(commentForm) }}
+    </div>
+{% else %}
+    <div class="section-title mb-0">
+        <h4 class="m-0 text-uppercase font-weight-bold">Please <a href="{{ path('app_login') }}">authorize</a> to leave a comment</h4>
+    </div>
+{% endif %}

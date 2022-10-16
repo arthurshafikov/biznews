@@ -94,9 +94,38 @@
             replyBtn.addEventListener('click', (event) => {
                 event.stopPropagation()
 
-                document.querySelector('#comment-form input[name="parent_id"]').value = event.target.dataset.commentId
+                document.querySelector('#comment-form input[name="comment_form[parent]"]')
+                    .value = event.target.dataset.commentId
                 document.getElementById("comment-form").scrollIntoView();
             })
+        })
+
+        document.querySelector('body').addEventListener('submit', (event) => {
+            if (event.target.getAttribute('name') === "comment_form") {
+                event.preventDefault()
+                let formData = new FormData(event.target)
+                let req = new Request('{{ path('app_comment') }}', {
+                    'method': 'POST',
+                    'mode': 'cors',
+                    'body': formData
+                })
+
+                fetch(req)
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.text()
+                        } else {
+                            throw new Error("500 Internal server error")
+                        }
+                    })
+                    .then((responseHTML) => {
+                        document.querySelector('#comment-form').innerHTML = responseHTML
+                    })
+                    .catch((err) => {
+                        alert(err)
+                        console.log(err)
+                    })
+            }
         })
     </script>
 {% endblock %}
