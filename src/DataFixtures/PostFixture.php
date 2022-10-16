@@ -12,6 +12,7 @@ use Faker\Generator;
 
 class PostFixture extends Fixture implements DependentFixtureInterface
 {
+    public const POSTS_COUNT = 50;
     private const IMAGES = [
         'news-700x435-1.jpg',
         'news-700x435-2.jpg',
@@ -34,7 +35,7 @@ class PostFixture extends Fixture implements DependentFixtureInterface
     {
         $categories = $this->getCategories();
 
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < self::POSTS_COUNT; $i++) {
             $post = new Post();
             $post->setCategory($this->faker->randomElement($categories));
             $post->setTitle($this->faker->realText(50));
