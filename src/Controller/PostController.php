@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Post;
+use App\Form\CommentFormType;
 use App\Repository\PostRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,6 +52,7 @@ class PostController extends Controller
 
         return $this->render('post/single.html.twig', [
             'post' => $post,
+            'commentForm' => $this->createForm(CommentFormType::class, ['post' => $post->getId()])->createView(),
             'comments' => $post->getComments()->filter(fn (Comment $comment) => $comment->getParent() === null),
         ]);
     }
