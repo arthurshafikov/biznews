@@ -2,14 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\SubscribedEmail;
-use App\Events\SubscribedEmailCreated;
-use App\Repository\SubscribedEmailRepository;
-use App\Service\TokenGeneratorService;
-use DateTime;
-use DateTimeImmutable;
+use App\Service\SubscribedNewsletterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,30 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SubscribeNewsletterController extends AbstractController
 {
-    public function __construct(
-        private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly TokenGeneratorService $tokenGeneratorService
-    ) {
+    public function __construct(private readonly SubscribedNewsletterService $subscribedNewsletterService)
+    {
     }
 
     #[Route('/subscribe/newsletter', name: 'app_newsletter_subscribe')]
-    public function subscribe(Request $request, SubscribedEmailRepository $repository): Response
+    public function subscribe(Request $request): Response
     {
-        $now = DateTimeImmutable::createFromMutable(new DateTime());
-
-        $subscribeEmail = new SubscribedEmail();
-        $subscribeEmail->setEmail($request->get('email'));
-        $subscribeEmail->setVerified(false);
-        $subscribeEmail->setCreatedAt($now);
-        $repository->add($subscribeEmail, true);
-
-        $this->eventDispatcher->dispatch(
-            new SubscribedEmailCreated(
-                $subscribeEmail,
-                $this->tokenGeneratorService->generateToken($subscribeEmail->getEmail())
-            ),
-            SubscribedEmailCreated::NAME
-        );
+        $this->subscribedNewsletterService->add($request->get('email'));
 
         $request->getSession()->getFlashBag()->add('session-message', [
             'title' => 'Congratulations!',
@@ -52,19 +30,9 @@ class SubscribeNewsletterController extends AbstractController
     }
 
     #[Route('/subscribe/confirm', name: 'app_newsletter_confirm')]
-    public function confirmSubscription(Request $request, SubscribedEmailRepository $repository): Response
+    public function confirmSubscription(Request $request): Response
     {
-        $subscribedEmail = $repository->findOneBy([
-            'email' => $request->get('email'),
-        ]);
-
-        if (
-            $subscribedEmail !== null &&
-            $this->tokenGeneratorService->generateToken($subscribedEmail->getEmail()) === $request->get('token')
-        ) {
-            $subscribedEmail->setVerified(true);
-            $repository->add($subscribedEmail, true);
-
+        if ($this->subscribedNewsletterService->confirm($request->get('email'), $request->get('token'))) {
             $request->getSession()->getFlashBag()->add('session-message', [
                 'title' => 'Success!',
                 'message' => 'You have successfully verified your subscription!',
