@@ -50,8 +50,13 @@ class ProfileController extends AbstractController
 
     private function returnForm(FormInterface $form): Response
     {
+        $user = $this->getUser();
+        if (!$user->isVerified()) {
+            $form->get('email')->addError(new FormError("Please verify your email"));
+        }
+
         return $this->render('profile/index.html.twig', [
-            'user' => $this->getUser(),
+            'user' => $user,
             'form' => $form->createView(),
         ]);
     }
