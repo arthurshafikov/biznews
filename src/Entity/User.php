@@ -15,8 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity('email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    public const USER_ROLE = 'USER';
-    public const ADMIN_ROLE = 'ADMIN';
+    public const USER_ROLE = 'ROLE_USER';
+    public const ADMIN_ROLE = 'ROLE_ADMIN';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
