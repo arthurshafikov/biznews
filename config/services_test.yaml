@@ -16,6 +16,9 @@ services:
             - '../src/Kernel.php'
             - '../src/Events/'
 
+    Symfony\Component\EventDispatcher\EventDispatcherInterface:
+        public: true
+        class: Symfony\Component\EventDispatcher\EventDispatcher
 
 
     # add more service definitions when explicit configuration is needed
