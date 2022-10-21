@@ -2,25 +2,15 @@
 
 namespace App\Tests\Integration\Service;
 
-use App\Entity\User;
 use App\EntityFactory\UserFactory;
 use App\Repository\UserRepository;
 use App\Service\TokenGeneratorService;
 use App\Service\UserService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class UserServiceTest extends KernelTestCase
 {
-    public function setUp(): void
-    {
-        self::bootKernel();
-        $this->truncateEntities([
-            User::class,
-        ]);
-    }
-
     public function testRegister(): void
     {
         $container = static::getContainer();
@@ -79,25 +69,5 @@ class UserServiceTest extends KernelTestCase
         $result = $userService->verifyToken('non-exists@email.com', 'uselessToken');
 
         $this->assertFalse($result);
-    }
-
-    private function truncateEntities(array $entities)
-    {
-        $container = static::getContainer();
-        $em = $container->get(EntityManagerInterface::class);
-        $connection = $em->getConnection();
-        $databasePlatform = $connection->getDatabasePlatform();
-        if ($databasePlatform->supportsForeignKeyConstraints()) {
-            $connection->query('SET FOREIGN_KEY_CHECKS=0');
-        }
-        foreach ($entities as $entity) {
-            $query = $databasePlatform->getTruncateTableSQL(
-                $em->getClassMetadata($entity)->getTableName()
-            );
-            $connection->executeUpdate($query);
-        }
-        if ($databasePlatform->supportsForeignKeyConstraints()) {
-            $connection->query('SET FOREIGN_KEY_CHECKS=1');
-        }
     }
 }

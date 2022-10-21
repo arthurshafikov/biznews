@@ -21,7 +21,7 @@ class ProfileService
     ) {
     }
 
-    public function update(User $user, string $userOldEmail, ?UploadedFile $avatar): void
+    public function update(User $user, string $userOldEmail, ?UploadedFile $avatar = null): void
     {
         if ($avatar) {
             $newAvatarFilename = $this->uploadNewAvatar($avatar);
