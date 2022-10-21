@@ -18,7 +18,7 @@ class UserFactory
         $this->faker = Factory::create();
     }
 
-    public function createFake(): User
+    public function createFake(array $params = []): User
     {
         $user = new User();
         $user->setEmail($this->faker->safeEmail());
@@ -28,6 +28,13 @@ class UserFactory
         $user->setVerified(false);
         $user->setRoles([]);
         $user->setCreatedAt(DateTimeImmutable::createFromMutable(new DateTime()));
+
+        if (!empty($params)) {
+            foreach ($params as $param => $value) {
+                $paramName = str_replace(' ', '', ucwords(str_replace('_', ' ', $param)));
+                $user->{"set$paramName"}($value);
+            }
+        }
 
         $this->userRepository->add($user, true);
 
