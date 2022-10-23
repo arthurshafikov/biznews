@@ -27,7 +27,6 @@ class UserFactory
         $user->setPassword('812yjasfjah82ydhj2doa32');
         $user->setVerified(false);
         $user->setRoles([]);
-        $user->setCreatedAt(DateTimeImmutable::createFromMutable(new DateTime()));
 
         if (!empty($params)) {
             foreach ($params as $param => $value) {

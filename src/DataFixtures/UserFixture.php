@@ -28,7 +28,6 @@ class UserFixture extends Fixture
         $user->setPassword($this->passwordHasher->hashPassword($user, 'secret'));
         $user->setVerified(true);
         $user->setRoles([User::ADMIN_ROLE]);
-        $user->setCreatedAt(DateTimeImmutable::createFromMutable(new DateTime()));
         $manager->persist($user);
 
         for ($i = 1; $i <= 3; $i++) {
@@ -38,7 +37,6 @@ class UserFixture extends Fixture
             $user->setPassword($this->passwordHasher->hashPassword($user, $this->faker->password));
             $user->setVerified(true);
             $user->setRoles([]);
-            $user->setCreatedAt(DateTimeImmutable::createFromMutable(new DateTime()));
             $manager->persist($user);
             $this->setReference('user_' . $i, $user);
         }

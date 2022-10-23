@@ -5,8 +5,6 @@ namespace App\Service;
 use App\Entity\User;
 use App\Events\UserChangedEmail;
 use App\Repository\UserRepository;
-use DateTime;
-use DateTimeImmutable;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -27,7 +25,6 @@ class UserService
         $user->setEmail($params['email']);
         $user->setVerified(false);
         $user->setPassword($this->hasher->hashPassword($user, $params['password']));
-        $user->setCreatedAt(DateTimeImmutable::createFromMutable(new DateTime()));
 
         $this->eventDispatcher->dispatch(
             new UserChangedEmail(

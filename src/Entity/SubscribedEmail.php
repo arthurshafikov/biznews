@@ -6,6 +6,7 @@ use App\Repository\SubscribedEmailRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SubscribedEmailRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class SubscribedEmail
 {
     #[ORM\Id]
@@ -61,5 +62,11 @@ class SubscribedEmail
         $this->created_at = $created_at;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtDefaultValue(): void
+    {
+        $this->created_at = \DateTimeImmutable::createFromMutable(new \DateTime());
     }
 }

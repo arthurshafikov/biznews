@@ -24,7 +24,6 @@ class CommentService
         $comment->setUser($user);
         $comment->setParent($params['parent'] ? $this->commentRepository->find($params['parent']) : null);
         $comment->setContent($params['content']);
-        $comment->setCreatedAt(DateTimeImmutable::createFromMutable(new DateTime()));
 
         $this->commentRepository->add($comment, true);
     }

@@ -23,7 +23,6 @@ class SubscribedNewsletterService
         $subscribeEmail = new SubscribedEmail();
         $subscribeEmail->setEmail($email);
         $subscribeEmail->setVerified(false);
-        $subscribeEmail->setCreatedAt(DateTimeImmutable::createFromMutable(new DateTime()));
         $this->repository->add($subscribeEmail, true);
 
         $this->eventDispatcher->dispatch(

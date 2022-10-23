@@ -35,7 +35,6 @@ class CommentFixture extends Fixture implements DependentFixtureInterface
                 $comment->setPost($this->getReference('post_' . $postNum));
                 $comment->setParent(null);
                 $comment->setContent($this->faker->realText(100));
-                $comment->setCreatedAt(DateTimeImmutable::createFromMutable(new DateTime()));
                 $manager->persist($comment);
             }
         }
