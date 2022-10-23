@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TagController extends Controller
 {
-    #[Route('/tag/{slug}', name: 'app_tag')]
+    #[Route('/tag/{slug}', name: 'app_tag', requirements: ['slug' => '[a-z-]+'])]
     public function index(Tag $tag, PostRepository $postRepository, Request $request): Response
     {
         $tagPosts = $postRepository

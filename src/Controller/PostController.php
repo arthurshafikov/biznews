@@ -44,7 +44,7 @@ class PostController extends Controller
         ]);
     }
 
-    #[Route('/posts/{slug}', name: 'app_post')]
+    #[Route('/posts/{slug}', name: 'app_post', requirements: ['slug' => '[a-z-]+'])]
     public function show(Post $post, PostRepository $postRepository): Response
     {
         $post->setViews($post->getViews() + 1);

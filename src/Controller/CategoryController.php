@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CategoryController extends Controller
 {
-    #[Route('/category/{slug}', name: 'app_category')]
+    #[Route('/category/{slug}', name: 'app_category', requirements: ['slug' => '[a-z-]+'])]
     public function index(Category $category, PostRepository $postRepository, Request $request): Response
     {
         $postsCount = $postRepository->getPostsCount([
