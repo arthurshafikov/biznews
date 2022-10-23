@@ -6,8 +6,6 @@ use App\Entity\Comment;
 use App\Entity\User;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
-use DateTime;
-use DateTimeImmutable;
 
 class CommentService
 {

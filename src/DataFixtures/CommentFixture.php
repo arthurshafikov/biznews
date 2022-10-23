@@ -3,8 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Comment;
-use DateTime;
-use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;

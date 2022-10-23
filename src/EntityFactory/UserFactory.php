@@ -4,8 +4,6 @@ namespace App\EntityFactory;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
-use DateTime;
-use DateTimeImmutable;
 use Faker\Factory;
 use Faker\Generator;
 

@@ -5,8 +5,6 @@ namespace App\Service;
 use App\Entity\SubscribedEmail;
 use App\Events\SubscribedEmailCreated;
 use App\Repository\SubscribedEmailRepository;
-use DateTime;
-use DateTimeImmutable;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class SubscribedNewsletterService
