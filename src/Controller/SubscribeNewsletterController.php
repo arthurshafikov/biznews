@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\SubscribedNewsletterService;
+use App\Service\SubscribedEmailService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,14 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SubscribeNewsletterController extends AbstractController
 {
-    public function __construct(private readonly SubscribedNewsletterService $subscribedNewsletterService)
+    public function __construct(private readonly SubscribedEmailService $subscribedEmailService)
     {
     }
 
     #[Route('/subscribe/newsletter', name: 'app_newsletter_subscribe')]
     public function subscribe(Request $request): Response
     {
-        $this->subscribedNewsletterService->add($request->get('email'));
+        $this->subscribedEmailService->add($request->get('email'));
 
         $request->getSession()->getFlashBag()->add('session-message', [
             'title' => 'Congratulations!',
@@ -32,7 +32,7 @@ class SubscribeNewsletterController extends AbstractController
     #[Route('/subscribe/confirm', name: 'app_newsletter_confirm')]
     public function confirmSubscription(Request $request): Response
     {
-        if ($this->subscribedNewsletterService->confirm($request->get('email'), $request->get('token'))) {
+        if ($this->subscribedEmailService->confirm($request->get('email'), $request->get('token'))) {
             $request->getSession()->getFlashBag()->add('session-message', [
                 'title' => 'Success!',
                 'message' => 'You have successfully verified your subscription!',

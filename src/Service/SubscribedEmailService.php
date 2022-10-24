@@ -7,7 +7,7 @@ use App\Events\SubscribedEmailCreated;
 use App\Repository\SubscribedEmailRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class SubscribedNewsletterService
+class SubscribedEmailService
 {
     public function __construct(
         private readonly SubscribedEmailRepository $repository,
